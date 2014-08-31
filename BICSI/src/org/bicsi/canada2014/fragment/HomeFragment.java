@@ -28,6 +28,7 @@ public class HomeFragment extends Fragment {
 	private ImageView ivConfsch, ivContacts, ivPresent, ivSurvey, ivCec, ivExhall, ivExfloor, ivExhbit, ivHtinfo, ivCommeet, ivTrainexam, ivBicsiwelcome;
 	private Fragment newFragment = new WebviewFragment();
 	private Fragment newFragment2 = new EhallSchedFragment2();
+	private Fragment newFragment3 = new ConfSchedFragment();
 
 	
 	
@@ -68,7 +69,9 @@ public class HomeFragment extends Fragment {
 	             	     
 		ivConfsch.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				openInternalWebview("http://www.bicsi.org/m/Schedule.aspx");
+				//openInternalWebview("http://www.bicsi.org/m/Schedule.aspx");
+				
+				mCallback.navigateToTabFragment(newFragment3, null);
 			}
 		});
 

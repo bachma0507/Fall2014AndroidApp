@@ -109,7 +109,7 @@ public class SQLiteDBcShed {
 	   else {
 	    mCursor = db.query(true, SQLITE_TABLE, new String[] {KEY_ID,
 	    		KEY_DAY, KEY_DATE}, 
-	    		KEY_DAY + " like '%" + inputText + "%'", null,
+	    		KEY_DATE + " like '%" + inputText + "%'", null,
 	      null, null, null, null);
 	   }
 	   if (mCursor != null) {

@@ -50,6 +50,7 @@ import com.google.analytics.tracking.android.MapBuilder;
 import com.google.gson.Gson;
 
 import org.bicsi.canada2014.adapter.SQLiteDB;
+import org.bicsi.canada2014.adapter.SQLiteDBcShed;
 import org.bicsi.canada2014.common.MizeUtil;
 import org.bicsi.canada2014.common.MizeUtil.PromptReturnListener;
 import org.bicsi.canada2014.fragment.AboutUsFragment;
@@ -181,7 +182,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
     }
 
 	//private SQLiteDB sqlite_obj;
-	 List<String> list1, list2, list3, list4, list5;
+	 //List<String> list1, list2, list3, list4, list5;
 	 private SimpleCursorAdapter dataAdapter;
     
     public void onCreate(Bundle savedInstanceState) {
@@ -204,12 +205,15 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 		Handler myHandler = new Handler();
 		myHandler.postDelayed(mMyRunnable, 1);
 		
+		GetURLCSched();
+		
 		 }
     
     ///
   private class LongOperation  extends AsyncTask<String, Void, Void> {
 	  
 	  	private SQLiteDB sqlite_obj = new SQLiteDB(mContext);
+	  	List<String> list1, list2, list3, list4, list5;
 		
   		private final HttpClient Client = new DefaultHttpClient();
           private String Content;
@@ -226,7 +230,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
               
               //Start Progress Dialog (Message)
             
-              Dialog.setMessage("Please wait..");
+              Dialog.setMessage("Updating data...");
               Dialog.show();
              
               try{
@@ -403,6 +407,200 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
           }
 
  }
+  
+  private class LongOperationCSched  extends AsyncTask<String, Void, Void> {
+	  
+	  	private SQLiteDBcShed sqlite_obj = new SQLiteDBcShed(mContext);
+	  	List<String> list1, list2, list3;
+		
+		private final HttpClient Client = new DefaultHttpClient();
+        private String Content;
+        private String Error = null;
+        private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
+        String data =""; 
+      
+        int sizeData = 0;  
+      
+       
+       
+        protected void onPreExecute() {
+            // NOTE: You can call UI Element here.
+            
+            //Start Progress Dialog (Message)
+          
+            Dialog.setMessage("Please wait..");
+            Dialog.show();
+           
+            try{
+                // Set Request parameter
+                data +="&" + URLEncoder.encode("data", "UTF-8");
+                   
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } 
+           
+        }
+
+        // Call after onPreExecute method
+        protected Void doInBackground(String... urls) {
+           
+            /************ Make Post Call To Web Server ***********/
+            BufferedReader reader=null;
+  
+                 // Send data 
+                try
+                { 
+                 
+                   // Defined URL  where to send data
+                   URL url = new URL(urls[0]);
+                    
+                  // Send POST data request
+      
+                  URLConnection conn = url.openConnection(); 
+                  conn.setDoOutput(true); 
+                  OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+                  wr.write( data ); 
+                  wr.flush(); 
+             
+                  // Get the server response 
+                  
+                  reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                  StringBuilder sb = new StringBuilder();
+                  String line = null;
+               
+                    // Read Server Response
+                    while((line = reader.readLine()) != null)
+                        {
+                               // Append server response in string
+                               sb.append(line + " ");
+                        }
+                   
+                    // Append Server Response To Content String 
+                   Content = sb.toString();
+                }
+                catch(Exception ex)
+                {
+                    Error = ex.getMessage();
+                }
+                finally
+                {
+                    try
+                    {
+        
+                        reader.close();
+                    }
+      
+                    catch(Exception ex) {}
+                }
+           
+            /*****************************************************/
+            return null;
+        }
+        
+        protected void onPostExecute(Void unused) {
+            // NOTE: You can call UI Element here.
+            
+            // Close progress dialog
+            Dialog.dismiss();
+            
+            if (Error != null) {
+                
+                System.out.println("Output : "+Error);
+                
+            } else {
+             
+                // Show Response Json On Screen (activity)
+            	System.out.println( Content );
+               
+             /****************** Start Parse Response JSON Data *************/
+               
+                String OutputData = "";
+                /*JSONObject jsonResponse;*/
+                     
+                try {
+                     
+              	
+              	
+                     /****** Creates a new JSONObject with name/value mappings from the JSON string. ********/
+                     /*jsonResponse = new JSONObject(Content);*/
+                     
+                     /***** Returns the value mapped by name if it exists and is a JSONArray. ***/
+                     /*******  Returns null otherwise.  *******/
+                     /*JSONArray jsonMainNode = jsonResponse.optJSONArray("");*/
+              	
+                	JSONArray jsonMainNode = new JSONArray(Content);
+                     
+                     /*********** Process each JSON Node ************/
+ 
+                     int lengthJsonArr = jsonMainNode.length();  
+                   
+                   list1 = new ArrayList<String>();
+         			 list2 = new ArrayList<String>();
+         			 list3 = new ArrayList<String>();
+         			 
+ 
+                     for(int i=0; i < lengthJsonArr; i++) 
+                     {
+                         /****** Get Object for each JSON node.***********/
+                         JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+                         
+                         /******* Fetch node values **********/
+                         String id       = jsonChildNode.optString("id").toString();
+                         String day     = jsonChildNode.optString("day").toString();
+                         String date = jsonChildNode.optString("date").toString();
+                       
+                         list1.add(jsonChildNode.getString("id"));
+                         list2.add(jsonChildNode.getString("day"));
+                         list3.add(jsonChildNode.getString("date"));
+                         
+                       
+                         OutputData += "ID: "+ id +" "
+                                     + "Day: "+ day +" "
+                                     + "Date: "+ date +" "
+                                     +"\n";
+                       
+                         sqlite_obj.open();
+                   	
+                     	sqlite_obj.deleteAll();
+                   	
+                     	for(int j=0; j<list1.size(); j++) {
+                   		
+                     		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString());
+                     		
+                     		
+                     	}
+                     	
+                     	sqlite_obj.close();
+                        
+                    }
+                 /****************** End Parse Response JSON Data *************/    
+                    
+                     //Show Parsed Output on screen (activity)
+                     /*jsonParsed.setText( OutputData );*/
+                     System.out.println(OutputData);
+                     
+                   //Generate ListView from SQLite Database
+                     //displayListView();
+                    
+                     
+                     
+                    
+                     
+                 } catch (JSONException e) {
+         
+                     e.printStackTrace();
+                 }
+ 
+                
+             }
+          
+        }
+
+}
+	 
+
+	 
    
   
   public void GetURL(){
@@ -411,6 +609,14 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
        
        // Use AsyncTask execute Method To Prevent ANR Problem
        new LongOperation().execute(serverURL);
+	}
+  
+  public void GetURLCSched(){
+		// WebServer Request URL
+     String serverURL = "http://speedyreference.com/cscheduleF14.php";
+     
+     // Use AsyncTask execute Method To Prevent ANR Problem
+     new LongOperationCSched().execute(serverURL);
 	}
     
     ////
