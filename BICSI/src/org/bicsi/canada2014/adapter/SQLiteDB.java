@@ -83,7 +83,7 @@ public class SQLiteDB {
 
 	 //---insert data into SQLite DB---
 	 	public long insert(String id, String scheduleDate, String sessionName, String sessionTime, String desc) {
-		
+
 	 		ContentValues initialValues = new ContentValues();
 	 		initialValues.put(KEY_ID, id);
 	 		initialValues.put(KEY_SCHEDULEDATE, scheduleDate);
@@ -127,7 +127,7 @@ public class SQLiteDB {
 	   Cursor mCursor = null;
 	   if (inputText == null  ||  inputText.length () == 0)  {
 	    mCursor = db.query(SQLITE_TABLE, new String[] {KEY_ID,
-	      KEY_SCHEDULEDATE, KEY_SESSIONNAME, KEY_SESSIONTIME, KEY_DESC}, 
+	    		 KEY_SCHEDULEDATE, KEY_SESSIONNAME, KEY_SESSIONTIME, KEY_DESC}, 
 	      null, null, null, null, null);
 
 	   }

@@ -1,5 +1,6 @@
 package org.bicsi.canada2014.activities;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -11,6 +12,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.client.HttpClient;
@@ -40,6 +42,8 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +55,8 @@ import com.google.gson.Gson;
 
 import org.bicsi.canada2014.adapter.SQLiteDB;
 import org.bicsi.canada2014.adapter.SQLiteDBcShed;
+import org.bicsi.canada2014.adapter.SQLiteDBAllData;
+import org.bicsi.canada2014.common.ServiceHandler;
 import org.bicsi.canada2014.common.MizeUtil;
 import org.bicsi.canada2014.common.MizeUtil.PromptReturnListener;
 import org.bicsi.canada2014.fragment.AboutUsFragment;
@@ -207,6 +213,8 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 		
 		GetURLCSched();
 		
+		new GetJSONData().execute();
+		
 		 }
     
     ///
@@ -214,7 +222,8 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 	  
 	  	private SQLiteDB sqlite_obj = new SQLiteDB(mContext);
 	  	List<String> list1, list2, list3, list4, list5;
-		
+	  	
+
   		private final HttpClient Client = new DefaultHttpClient();
           private String Content;
           private String Error = null;
@@ -341,7 +350,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
            			 list2 = new ArrayList<String>();
            			 list3 = new ArrayList<String>();
            			 list4 = new ArrayList<String>();
-           			list5 = new ArrayList<String>();
+           			 list5 = new ArrayList<String>();
    
                        for(int i=0; i < lengthJsonArr; i++) 
                        {
@@ -349,7 +358,8 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
                            JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
                            
                            /******* Fetch node values **********/
-                           String id       = jsonChildNode.optString("id").toString();
+                           //String id       = jsonChildNode.optString("id").toString();
+                           String id = jsonChildNode.optString("id").toString();
                            String scheduleDate     = jsonChildNode.optString("scheduleDate").toString();
                            String sessionName = jsonChildNode.optString("sessionName").toString();
                            String sessionTime = jsonChildNode.optString("sessionTime").toString();
@@ -361,10 +371,12 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
                            list4.add(jsonChildNode.getString("sessionTime"));
                            list5.add(jsonChildNode.getString("desc"));
                            
+                           
+                           
                          
                            OutputData += "ID: "+ id +" "
                                        + "ScheduleDate: "+ scheduleDate +" "
-                                       + "SessionName: "+ sessionName +" "
+                                       + "ID sessionname: "+ sessionName +" "
                                        + "SessionTime: "+ sessionTime +" "
                                        + "Desc: "+ desc +" "
                                        +"\n";
@@ -376,7 +388,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
                        	for(int j=0; j<list1.size(); j++) {
                      		
                        		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString(), list4.get(j).toString(), list5.get(j).toString());
-                       		
+
                        		
                        	}
                        	
@@ -428,7 +440,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
             
             //Start Progress Dialog (Message)
           
-            Dialog.setMessage("Please wait..");
+            Dialog.setMessage("Updating data...");
             Dialog.show();
            
             try{
@@ -599,9 +611,470 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 
 }
 	 
+  private class GetJSONData  extends AsyncTask<Void, Void, Void> {
+	  
+	  private ProgressDialog pDialog;
+	  private static final String url = "https://webservice.bicsi.org/json/reply/MobSession?SessionAltCd=CN-FALL-CA-0914";
+	  
+	  private static final String TAG_FUNCTIONS = "Functions";
+		/*private static final String TAG_FUNCTIONCD = "FUNCTIONCD";
+		private static final String TAG_FUNCTIONTITLE = "functiontitle";
+	    private static final String TAG_FUNCTIONDESCRIPTION = "functiondescription";*/
+	  
+	  	private SQLiteDBAllData sqlite_obj = new SQLiteDBAllData(mContext);
+	  	List<String> list1,list2,list3,list4,list5,list6,list7,list8,list9,list10,list11,list12,list13,list14,list15,list16,list17,list18,list19,list20,list21,list22,list23,list24,list25,list26,list27,list28,list29,list30,list31,list32,list33,list34,list35,list36,list37,list38,list39,list40,list41,list42,list43;
+	  	
+	  	JSONArray functions = null;
+	  	
+	  	@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Showing progress dialog
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Updating data...");
+			pDialog.setCancelable(false);
+			pDialog.show();
 
-	 
-   
+		}
+	  	
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// Creating service handler class instance
+			ServiceHandler sh = new ServiceHandler();
+
+			// Making a request to url and getting response
+			String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+
+			Log.d("Response: ", "> " + jsonStr);
+			
+			String OutputData = "";
+
+			if (jsonStr != null) {
+				
+				
+				try {
+					
+					
+					JSONObject jsonObj = new JSONObject(jsonStr);
+					
+					// Getting JSON Array node
+					functions = jsonObj.getJSONArray(TAG_FUNCTIONS);
+
+					// looping through All Contacts
+					for (int i = 0; i < functions.length(); i++) {
+						JSONObject c = functions.getJSONObject(i);
+						
+						list1= new ArrayList<String>();
+						list2= new ArrayList<String>();
+						list3= new ArrayList<String>();
+						list4= new ArrayList<String>();
+						list5= new ArrayList<String>();
+						list6= new ArrayList<String>();
+						list7= new ArrayList<String>();
+						list8= new ArrayList<String>();
+						list9= new ArrayList<String>();
+						list10= new ArrayList<String>();
+						list11= new ArrayList<String>();
+						list12= new ArrayList<String>();
+						list13= new ArrayList<String>();
+						list14= new ArrayList<String>();
+						list15= new ArrayList<String>();
+						list16= new ArrayList<String>();
+						list17= new ArrayList<String>();
+						list18= new ArrayList<String>();
+						list19= new ArrayList<String>();
+						list20= new ArrayList<String>();
+						list21= new ArrayList<String>();
+						list22= new ArrayList<String>();
+						list23= new ArrayList<String>();
+						list24= new ArrayList<String>();
+						list25= new ArrayList<String>();
+						list26= new ArrayList<String>();
+						list27= new ArrayList<String>();
+						list28= new ArrayList<String>();
+						list29= new ArrayList<String>();
+						list30= new ArrayList<String>();
+						list31= new ArrayList<String>();
+						list32= new ArrayList<String>();
+						list33= new ArrayList<String>();
+						list34= new ArrayList<String>();
+						list35= new ArrayList<String>();
+						list36= new ArrayList<String>();
+						list37= new ArrayList<String>();
+						list38= new ArrayList<String>();
+						list39= new ArrayList<String>();
+						list40= new ArrayList<String>();
+						list41= new ArrayList<String>();
+						list42= new ArrayList<String>();
+						list43= new ArrayList<String>();
+						
+						
+						
+		       			 
+					    /*String FUNCTIONCD= c.optString("FUNCTIONCD").toString();
+						String functiontitle= c.optString("functiontitle").toString();
+						String functiondescription= c.optString("functiondescription").toString();
+						String LOCATIONNAME= c.optString("LOCATIONNAME").toString();
+						String fucntioindate= c.optString("fucntioindate").toString();
+						String functionStartTime= c.optString("functionStartTime").toString();
+						String functionEndTime= c.optString("functionEndTime").toString();
+						String trainer1firstname= c.optString("trainer1firstname").toString();
+						String trainer1lastname= c.optString("trainer1lastname").toString();
+						String trainer1org= c.optString("trainer1org").toString();
+						String trainer1city= c.optString("trainer1city").toString();
+						String trainer1state= c.optString("trainer1state").toString();
+						String trainer1country= c.optString("trainer1country").toString();
+						String trainer2firstname= c.optString("trainer2firstname").toString();
+						String trainer2lastname= c.optString("trainer2lastname").toString();
+						String trainer2org= c.optString("trainer2org").toString();
+						String trainer2city= c.optString("trainer2city").toString();
+						String trainer2state= c.optString("trainer2state").toString();
+						String trainer2country= c.optString("trainer2country").toString();
+						String trainer3firstname= c.optString("trainer3firstname").toString();
+						String trainer3lastname= c.optString("trainer3lastname").toString();
+						String trainer3org= c.optString("trainer3org").toString();
+						String trainer3city= c.optString("trainer3city").toString();
+						String trainer3state= c.optString("trainer3state").toString();
+						String trainer3country= c.optString("trainer3country").toString();
+						String trainer4firstname= c.optString("trainer4firstname").toString();
+						String trainer4lastname= c.optString("trainer4lastname").toString();
+						String trainer4org= c.optString("trainer4org").toString();
+						String trainer4city= c.optString("trainer4city").toString();
+						String trainer4state= c.optString("trainer4state").toString();
+						String trainer4country= c.optString("trainer4country").toString();
+						String trainer5firstname= c.optString("trainer5firstname").toString();
+						String trainer5lastname= c.optString("trainer5lastname").toString();
+						String trainer5org= c.optString("trainer5org").toString();
+						String trainer5city= c.optString("trainer5city").toString();
+						String trainer5state= c.optString("trainer5state").toString();
+						String trainer5country= c.optString("trainer5country").toString();
+						String trainer6firstname= c.optString("trainer6firstname").toString();
+						String trainer6lastname= c.optString("trainer6lastname").toString();
+						String trainer6org= c.optString("trainer6org").toString();
+						String trainer6city= c.optString("trainer6city").toString();
+						String trainer6state= c.optString("trainer6state").toString();
+						String trainer6country= c.optString("trainer6country").toString();*/
+						 
+
+	                     
+						list1.add(c.getString("FUNCTIONCD"));
+						list2.add(c.getString("functiontitle"));
+						list3.add(c.getString("functiondescription"));
+						list4.add(c.getString("LOCATIONNAME"));
+						list5.add(c.getString("fucntioindate"));
+						list6.add(c.getString("functionStartTime"));
+						list7.add(c.getString("functionEndTime"));
+						list8.add(c.getString("trainer1firstname"));
+						list9.add(c.getString("trainer1lastname"));
+						list10.add(c.getString("trainer1org"));
+						list11.add(c.getString("trainer1city"));
+						list12.add(c.getString("trainer1state"));
+						list13.add(c.getString("trainer1country"));
+						list14.add(c.getString("trainer2firstname"));
+						list15.add(c.getString("trainer2lastname"));
+						list16.add(c.getString("trainer2org"));
+						list17.add(c.getString("trainer2city"));
+						list18.add(c.getString("trainer2state"));
+						list19.add(c.getString("trainer2country"));
+						list20.add(c.getString("trainer3firstname"));
+						list21.add(c.getString("trainer3lastname"));
+						list22.add(c.getString("trainer3org"));
+						list23.add(c.getString("trainer3city"));
+						list24.add(c.getString("trainer3state"));
+						list25.add(c.getString("trainer3country"));
+						list26.add(c.getString("trainer4firstname"));
+						list27.add(c.getString("trainer4lastname"));
+						list28.add(c.getString("trainer4org"));
+						list29.add(c.getString("trainer4city"));
+						list30.add(c.getString("trainer4state"));
+						list31.add(c.getString("trainer4country"));
+						list32.add(c.getString("trainer5firstname"));
+						list33.add(c.getString("trainer5lastname"));
+						list34.add(c.getString("trainer5org"));
+						list35.add(c.getString("trainer5city"));
+						list36.add(c.getString("trainer5state"));
+						list37.add(c.getString("trainer5country"));
+						list38.add(c.getString("trainer6firstname"));
+						list39.add(c.getString("trainer6lastname"));
+						list40.add(c.getString("trainer6org"));
+						list41.add(c.getString("trainer6city"));
+						list42.add(c.getString("trainer6state"));
+						list43.add(c.getString("trainer6country"));   
+	                     
+	                       /*OutputData += "FUNCTIONCD: "+ FUNCTIONCD +" "
+	                                   + "Title: "+ functiontitle +" "
+	                                   + "Desc: "+ functiondescription +" "
+	                                   +"\n";*/
+	                     
+	                       sqlite_obj.open();
+	                       
+	                       /*System.out.println("List1 string FUNCTIONCD for insert statement: " + list1.toString());
+	                       System.out.println("List1 string functiontitle for insert statement: " + list2.toString());
+	                       System.out.println("List1 string functiondescription for insert statement: " + list3.toString());
+	                       System.out.println("List1 string LOCATIONNAME for insert statement: " + list4.toString());
+	                       System.out.println("List1 string fucntioindate for insert statement: " + list5.toString());
+	                       System.out.println("List1 string functionStartTime for insert statement: " + list6.toString());
+	                       System.out.println("List1 string functionEndTime for insert statement: " + list7.toString());
+	                       System.out.println("List1 string trainer1firstname for insert statement: " + list8.toString());*/
+						
+	                       for(int j=0; j<list1.size(); j++) {
+	                    	   
+	                    		
+	                      		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString(), list4.get(j).toString(), list5.get(j).toString(), list6.get(j).toString(), list7.get(j).toString(), list8.get(j).toString(), list9.get(j).toString(), list10.get(j).toString(), list11.get(j).toString(), list12.get(j).toString(), list13.get(j).toString(), list14.get(j).toString(), list15.get(j).toString(), list16.get(j).toString(), list17.get(j).toString(), list18.get(j).toString(), list19.get(j).toString(), list20.get(j).toString(), list21.get(j).toString(), list22.get(j).toString(), list23.get(j).toString(), list24.get(j).toString(), list25.get(j).toString(), list26.get(j).toString(), list27.get(j).toString(), list28.get(j).toString(), list29.get(j).toString(), list30.get(j).toString(), list31.get(j).toString(), list32.get(j).toString(), list33.get(j).toString(), list34.get(j).toString(), list35.get(j).toString(), list36.get(j).toString(), list37.get(j).toString(), list38.get(j).toString(), list39.get(j).toString(), list40.get(j).toString(), list41.get(j).toString(), list42.get(j).toString(), list43.get(j).toString());
+	                      		
+	                      		
+	                      	}
+	                      	
+	                      	sqlite_obj.close();
+	                         
+	                     }
+					
+	                   System.out.println(OutputData);
+						
+						/*String FUNCTIONCD = c.getString(TAG_FUNCTIONCD);
+						String trainer1firstname = c.getString(TAG_TRAINER1FIRSTNAME);
+						String trainer1lastname = c.getString(TAG_TRAINER1LASTNAME);
+                        String LOCATIONNAME = c.getString(TAG_LOCATIONNAME);
+						String address = c.getString(TAG_ADDRESS);
+						String gender = c.getString(TAG_GENDER);
+
+						// Phone node is JSON Object
+						JSONObject phone = c.getJSONObject(TAG_PHONE);
+						String mobile = phone.getString(TAG_PHONE_MOBILE);
+						String home = phone.getString(TAG_PHONE_HOME);
+						String office = phone.getString(TAG_PHONE_OFFICE);
+
+						// tmp hashmap for single contact
+						HashMap<String, String> contact = new HashMap<String, String>();
+
+						// adding each child node to HashMap key => value
+						contact.put(TAG_FUNCTIONCD, FUNCTIONCD);
+						contact.put(TAG_TRAINER1FIRSTNAME, trainer1firstname);
+						contact.put(TAG_TRAINER1LASTNAME, trainer1lastname);
+						contact.put(TAG_LOCATIONNAME, LOCATIONNAME);*/
+
+						// adding contact to contact list
+						//functionList.add(contact);
+					//}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			} else {
+				Log.e("ServiceHandler", "Couldn't get any data from the url");
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			// Dismiss the progress dialog
+			if (pDialog.isShowing())
+				pDialog.dismiss();
+			/**
+			 * Updating parsed JSON data into ListView
+			 * */
+			/*ListAdapter adapter = new SimpleAdapter(
+					MainActivity.this, functionList,
+					R.layout.list_item, new String[] { TAG_TRAINER1FIRSTNAME, TAG_TRAINER1LASTNAME,
+                    TAG_LOCATIONNAME }, new int[] { R.id.trainer1firstname,
+							R.id.trainer1lastname, R.id.LOCATIONNAME });
+
+			setListAdapter(adapter);*/
+		}
+		
+		/*private final HttpClient Client = new DefaultHttpClient();
+      private String Content;
+      private String Error = null;
+      private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
+      String data =""; 
+    
+      int sizeData = 0;  
+    
+     
+     
+      protected void onPreExecute() {
+          // NOTE: You can call UI Element here.
+          
+          //Start Progress Dialog (Message)
+        
+          Dialog.setMessage("Updating data...");
+          Dialog.show();
+         
+          try{
+              // Set Request parameter
+              data +="&" + URLEncoder.encode("data", "UTF-8");
+                 
+          } catch (UnsupportedEncodingException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+          } 
+         
+      }
+
+      // Call after onPreExecute method
+      protected Void doInBackground(String... urls) {
+         
+          *//************ Make Post Call To Web Server ***********//*
+          BufferedReader reader=null;
+
+               // Send data 
+              try
+              { 
+               
+                 // Defined URL  where to send data
+                 URL url = new URL(urls[0]);
+                  
+                // Send POST data request
+    
+                URLConnection conn = url.openConnection(); 
+                conn.setDoOutput(true); 
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+                wr.write( data ); 
+                wr.flush(); 
+           
+                // Get the server response 
+                
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+             
+                  // Read Server Response
+                  while((line = reader.readLine()) != null)
+                      {
+                             // Append server response in string
+                             sb.append(line + " ");
+                      }
+                 
+                  // Append Server Response To Content String 
+                 Content = sb.toString();
+              }
+              catch(Exception ex)
+              {
+                  Error = ex.getMessage();
+              }
+              finally
+              {
+                  try
+                  {
+      
+                      reader.close();
+                  }
+    
+                  catch(Exception ex) {}
+              }
+         
+          *//*****************************************************//*
+          return null;
+      }
+      
+      protected void onPostExecute(Void unused) {
+          // NOTE: You can call UI Element here.
+          
+          // Close progress dialog
+          Dialog.dismiss();
+          
+          if (Error != null) {
+              
+              System.out.println("Output : "+Error);
+              
+          } else {
+           
+              // Show Response Json On Screen (activity)
+          	System.out.println( Content );
+             
+           *//****************** Start Parse Response JSON Data *************//*
+             
+              String OutputData = "";
+              //JSONObject jsonResponse;
+              
+              try {
+            	  String TAG_FUNCTIONS = "Functions";
+            	  
+                   *//****** Creates a new JSONObject with name/value mappings from the JSON string. ********//*
+                   //jsonResponse = new JSONObject(Content);
+            	  /////NEW
+            	  JSONObject jsonObj = new JSONObject(Content);
+            	  functions = jsonObj.getJSONArray(TAG_FUNCTIONS);
+            	  
+            	  for (int i = 0; i < functions.length(); i++) {
+						JSONObject c = functions.getJSONObject(i);
+            	  
+                   
+                  /////END NEW 
+                   *//***** Returns the value mapped by name if it exists and is a JSONArray. ***//*
+                   *//*******  Returns null otherwise.  *******//*
+                   //JSONArray jsonMainNode = jsonResponse.optJSONArray("Functions");
+            	
+              	//JSONArray jsonMainNode = new JSONArray(Content);
+                   
+                   *//*********** Process each JSON Node ************//*
+
+                   //int lengthJsonArr = jsonMainNode.length();  
+                 
+                 list1 = new ArrayList<String>();
+       			 list2 = new ArrayList<String>();
+       			 list3 = new ArrayList<String>();
+       			 
+
+                   for(int i=0; i < lengthJsonArr; i++) 
+                   {
+                       *//****** Get Object for each JSON node.***********//*
+                       JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
+                       
+                       *//******* Fetch node values **********//*
+                       String id       = c.optString("FUNCTIONCD").toString();
+                       String title     = c.optString("functiontitle").toString();
+                       String desc = c.optString("functiondescription").toString();
+                     
+                       list1.add(c.getString("id"));
+                       list2.add(c.getString("title"));
+                       list3.add(c.getString("desc"));
+                       
+                     
+                       OutputData += "ID: "+ id +" "
+                                   + "Title: "+ title +" "
+                                   + "Desc: "+ desc +" "
+                                   +"\n";
+                     
+                       sqlite_obj.open();
+                 	
+                   	sqlite_obj.deleteAll();
+                 	
+                   	for(int j=0; j<list1.size(); j++) {
+                 		
+                   		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString());
+                   		
+                   		
+                   	}
+                   	
+                   	sqlite_obj.close();
+                      
+                  }
+               *//****************** End Parse Response JSON Data *************//*    
+                  
+                   //Show Parsed Output on screen (activity)
+                   jsonParsed.setText( OutputData );
+                   System.out.println(OutputData);
+                   
+                 //Generate ListView from SQLite Database
+                   //displayListView();
+                  
+                   
+                   
+                  
+                   
+               } catch (JSONException e) {
+       
+                   e.printStackTrace();
+               }
+      		}
+              
+        }
+*/
+}
+
   
   public void GetURL(){
 		// WebServer Request URL
@@ -618,7 +1091,8 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
      // Use AsyncTask execute Method To Prevent ANR Problem
      new LongOperationCSched().execute(serverURL);
 	}
-    
+  
+  
     ////
     @Override
     public void onStop() {

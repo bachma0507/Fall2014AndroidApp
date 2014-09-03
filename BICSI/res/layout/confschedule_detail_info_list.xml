@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="6dip" >
+
+
+		<TextView
+            android:id="@+id/textViewfunctiontitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             android:textStyle="bold"
+            android:text="functiontitle"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+		
+		<TextView
+            android:id="@+id/textViewfunctiondate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             android:textStyle="bold"
+            android:text="functiondate"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+		<TextView
+		    android:id="@+id/textViewfunctionStartTime"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="functionStartTime"
+		    android:textAppearance="?android:attr/textAppearanceSmall"
+		    android:textStyle="bold" />
+			
+			<TextView
+			    android:layout_width="25dp"
+			    android:layout_height="wrap_content"
+			    android:text=" - "
+			    android:textAppearance="?android:attr/textAppearanceSmall"
+			    android:textStyle="bold" />
+			
+		<TextView
+		    android:id="@+id/textViewfunctionEndTime"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="functionEndTime"
+		    android:textAppearance="?android:attr/textAppearanceSmall"
+		    android:textStyle="bold" />
+		
+		<TextView
+            android:id="@+id/textViewFUNCTIONCD"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             android:textStyle="bold"
+            android:text="hidden"
+            android:visibility="gone" />
+
+</LinearLayout>
