@@ -1,5 +1,9 @@
 package org.bicsi.canada2014.adapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
@@ -9,6 +13,8 @@ import android.util.Log;
 import android.database.Cursor;
 
 public class SQLiteDBAllData {
+	
+	public static Date myTime;
 
 	//public static final String KEY_ID = "_id";
 	public static final String KEY_ID = "_id";
@@ -191,19 +197,19 @@ public class SQLiteDBAllData {
 	 	}*/
 
 	 
-	 public Cursor fetchScheduleByDate(String inputText, String confDate) throws SQLException {
+	 public Cursor fetchScheduleByDate(String inputText, String newConfDate) throws SQLException {
 	   Log.w(TAG, inputText);
 	   Cursor mCursor = null;
 	   if (inputText == null  ||  inputText.length () == 0)  {
 	    mCursor = db.query(SQLITE_TABLE, new String[] {
 	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
-	      KEY_fucntioindate + " = " + confDate, null, null, null, null, null);
+	    		KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);
 
 	   }
 	   else {
 	    mCursor = db.query(true, SQLITE_TABLE, new String[] {
 	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
-	    		KEY_functiontitle + " like '%" + inputText + "%'", null,
+	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate, null,
 	      null, null, null, null);
 	   }
 	   if (mCursor != null) {
@@ -213,11 +219,11 @@ public class SQLiteDBAllData {
 
 	  }
 
-	 public Cursor fetchAllSchedulesByDate(String confDate) {
+	 public Cursor fetchAllSchedulesByDate(String newConfDate){
 
 	  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
-	    		KEY_fucntioindate + " = " + confDate, null,
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME }, 
+	    		KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE '%EXHX%' ", null,
 	      null, null, null, null);
 
 	  if (mCursor != null) {
@@ -225,6 +231,32 @@ public class SQLiteDBAllData {
 	  }
 	  return mCursor;
 	 }
+	 
+	 public Cursor fetchAllSchedulesByID(String newFunctioncd){
+
+		  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription}, 
+		    		KEY_ID + " = " + newFunctioncd, null,
+		      null, null, null, null);
+
+		  if (mCursor != null) {
+		   mCursor.moveToFirst();
+		  }
+		  return mCursor;
+		 }
+	 
+	 public Cursor fetchAllSchedulesByDate092814() {
+
+		  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
+		    		KEY_fucntioindate + " = '09-28-2014' ", null,
+		      null, null, null, null);
+
+		  if (mCursor != null) {
+		   mCursor.moveToFirst();
+		  }
+		  return mCursor;
+		 }
 	 
 	 public Cursor fetchAllSchedules() {
 

@@ -142,6 +142,7 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 	    String confDate = format.format(Date.parse(confSchedDate));
+	    
 
 		//String allData = exHallScheduleDate + " \n" + exHallSessionName + "\n" + exHallSessionTime;
 
@@ -151,8 +152,10 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		ConfSchedDetailFragment myDetailFragment = new ConfSchedDetailFragment();
 
 		Bundle bundle = new Bundle();
+		
+		String newConfDate = new String("'" + confDate + "'");
 
-		bundle.putString("date", confDate);
+		bundle.putString("date", newConfDate);
 
 		myDetailFragment.setArguments(bundle);
 

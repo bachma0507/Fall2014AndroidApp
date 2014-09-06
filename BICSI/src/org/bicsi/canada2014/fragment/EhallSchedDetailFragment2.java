@@ -52,7 +52,7 @@ public class EhallSchedDetailFragment2 extends Fragment {
 	}
 
 
-	public void updateNmeDetail(String sessNameDet) {
+	/*public void updateNmeDetail(String sessNameDet) {
 		sessionNameDetail.setText(sessNameDet);
 	}
 
@@ -66,7 +66,7 @@ public class EhallSchedDetailFragment2 extends Fragment {
 
 	public void updateDescDetail(String descDet) {
 		descDetail.setText(descDet);
-	}
+	}*/
 
 
 }

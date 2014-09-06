@@ -1,5 +1,8 @@
 package org.bicsi.canada2014.fragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.bicsi.fall2014.R;
 import org.bicsi.canada2014.adapter.SQLiteDBAllData;
@@ -35,7 +38,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 	private NavigateToTabFragmentListener mCallback;//interface from MizeUtil
 	private SQLiteDBAllData sqlite_obj;
 	private SimpleCursorAdapter dataAdapter;
-	public String confDate;
+	public String newConfDate;
 
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -61,20 +64,28 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		Bundle bundle = getArguments();
 				if(bundle != null){
 				
-				confDate = bundle.getString("date");
+				newConfDate = bundle.getString("date");
 				
 				}
 
-				System.out.println("BUNDLE DATE PASSED IS " + confDate);
+				System.out.println("BUNDLE DATE PASSED IS " + newConfDate);
 
 		sqlite_obj = new SQLiteDBAllData(getActivity());
 
 		sqlite_obj.open();
 
-		Cursor cursor = sqlite_obj.fetchAllSchedulesByDate(confDate);
+		Cursor cursor = sqlite_obj.fetchAllSchedulesByDate(newConfDate);
 		
 		
 		//Cursor cursor = sqlite_obj.fetchAllSchedules();
+		
+		//Date dateStartTime = new Date (SQLiteDBAllData.KEY_functionStartTime);
+		
+		
+		
+		/*SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a");
+		String strStartTime = formatter.format(dateStartTime);*/
+
 		
 
 		// The desired columns to be bound
@@ -83,7 +94,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				SQLiteDBAllData.KEY_fucntioindate,
 				SQLiteDBAllData.KEY_functionStartTime,
 				SQLiteDBAllData.KEY_functionEndTime,
-				SQLiteDBAllData.KEY_ID
+				SQLiteDBAllData.KEY_ID,
+				SQLiteDBAllData.KEY_functiondescription,
+				SQLiteDBAllData.KEY_LOCATIONNAME
 				
 
 		};
@@ -104,11 +117,14 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		// create the adapter using the cursor pointing to the desired data 
 		//as well as the layout information
 		dataAdapter = new SimpleCursorAdapter(
+				
 				getActivity(), R.layout.confschedule_detail_info_list, 
 				cursor, 
 				columns, 
 				to,
 				0);
+		
+		
 
 		ListView listView = (ListView)v. findViewById(android.R.id.list);
 		// Assign adapter to ListView
@@ -134,7 +150,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 
 		dataAdapter.setFilterQueryProvider(new FilterQueryProvider() {
 			public Cursor runQuery(CharSequence constraint) {
-				return sqlite_obj.fetchScheduleByDate(constraint.toString(), confDate);
+				return sqlite_obj.fetchScheduleByDate(constraint.toString(), newConfDate);
+				
 			}
 		});
 
@@ -149,26 +166,67 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		//Toast.makeText(getActivity(), "Clicked "+ position, Toast.LENGTH_LONG).show();
 		// Get the cursor, positioned to the corresponding row in the result set
 		Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+		
+		
+		
+		
 
-
-		String confFUNCTIONCD = 
+		/*String confFUNCTIONCD = 
 				cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+		
+		String fst = 
+				cursor.getString(cursor.getColumnIndexOrThrow("functionStartTime"));
+		
+		
 
-		//String allData = exHallScheduleDate + " \n" + exHallSessionName + "\n" + exHallSessionTime;
+		String allData = confFUNCTIONCD + " \n" + fst + " \n";
 
-		Toast.makeText(getActivity(), confFUNCTIONCD, Toast.LENGTH_LONG).show();
+		Toast.makeText(getActivity(), allData, Toast.LENGTH_LONG).show();*/
+		
+		String functioncd = 
+				cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+		
+		String functionTitle = 
+				cursor.getString(cursor.getColumnIndexOrThrow("functiontitle"));
+		
+		String functionDate = 
+				cursor.getString(cursor.getColumnIndexOrThrow("fucntioindate"));
+		
+		String functionStart = 
+				cursor.getString(cursor.getColumnIndexOrThrow("functionStartTime"));
+		
+		String functionEnd = 
+				cursor.getString(cursor.getColumnIndexOrThrow("functionEndTime"));
+		
+		String functionDescription = 
+				cursor.getString(cursor.getColumnIndexOrThrow("functiondescription"));
+		
+		String functionLocation = 
+				cursor.getString(cursor.getColumnIndexOrThrow("LOCATIONNAME"));
+		
+		
 
 
-		/*ConfSchedDetailFragment myDetailFragment = new ConfSchedDetailFragment();
+		ConfSchedSingleFragment mySingleFragment = new ConfSchedSingleFragment();
 
 		Bundle bundle = new Bundle();
+		
+		String newFunctioncd = new String("'" + functioncd + "'");
 
-		bundle.putString("date", confSchedDate);
+		bundle.putString("_id", newFunctioncd);
+		bundle.putString("functiontitle", functionTitle);
+		bundle.putString("fucntioindate", functionDate);
+		bundle.putString("functionStartTime", functionStart);
+		bundle.putString("functionEndTime", functionEnd);
+		bundle.putString("functiondescription", functionDescription);
+		bundle.putString("LOCATIONNAME", functionLocation);
+		
+		
 
-		myDetailFragment.setArguments(bundle);
+		mySingleFragment.setArguments(bundle);
 
-		mCallback.navigateToTabFragment(myDetailFragment, null); //interface method
-		*/
+		mCallback.navigateToTabFragment(mySingleFragment, null); //interface method
+		
 
 		sqlite_obj.close();
 
@@ -179,6 +237,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		super.onResume();
 		((MainActivity)getActivity()).updateTracker("Home Tab");
 	}
+	
 
 
 }

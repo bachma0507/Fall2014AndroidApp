@@ -9,11 +9,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -800,6 +802,10 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 						list41.add(c.getString("trainer6city"));
 						list42.add(c.getString("trainer6state"));
 						list43.add(c.getString("trainer6country"));   
+						
+						
+						
+
 	                     
 	                       /*OutputData += "FUNCTIONCD: "+ FUNCTIONCD +" "
 	                                   + "Title: "+ functiontitle +" "
@@ -1074,6 +1080,22 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
         }
 */
 }
+  
+  public int intDate (String sdate){
+	   
+	  int intDate = (int) System.currentTimeMillis(); //Initializes var with current time in case parsing fails
+	    
+	  SimpleDateFormat format = new SimpleDateFormat("HH:mm a", Locale.US); //Describes date pattern
+	  format.setLenient(false); //enforces strict pattern matching  
+	     
+	  try {
+	   Date date = format.parse(sdate); //converts string to a date object
+	   intDate = (int) date.getTime(); 
+	  } catch (ParseException e) {
+	  }
+	     
+	  return intDate;  
+	  }
 
   
   public void GetURL(){
