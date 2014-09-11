@@ -202,15 +202,15 @@ public class SQLiteDBAllData {
 	   Cursor mCursor = null;
 	   if (inputText == null  ||  inputText.length () == 0)  {
 	    mCursor = db.query(SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
-	    		KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);
-
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME},
+	    		KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%')", null, null, null, null, null);
+	    		//KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
 	   else {
 	    mCursor = db.query(true, SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime}, 
-	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate, null,
-	      null, null, null, null);
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME},
+	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%')", null, null, null, null, null);
+	    		//KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
 	   if (mCursor != null) {
 	    mCursor.moveToFirst();
@@ -219,23 +219,50 @@ public class SQLiteDBAllData {
 
 	  }
 
-	 public Cursor fetchAllSchedulesByDate(String newConfDate){
-
-	  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME }, 
-	    		KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE '%EXHX%' ", null,
-	      null, null, null, null);
-
-	  if (mCursor != null) {
-	   mCursor.moveToFirst();
-	  }
-	  return mCursor;
+	 
+	 public Cursor getAllSChedulesByConfDate(String newConfDate){
+		 Cursor mCursor = db.query(SQLITE_TABLE,  new String[] {
+				 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME },
+				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%')", null, null, null, null, null);
+				 //KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
+				 //"(" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%') AND " + KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);
+		 
+		 if (mCursor != null) {
+			 mCursor.moveToFirst(); 
+		 }
+		 return mCursor;
+		 
 	 }
+	 
+	 public Cursor getAllSChedulesByConfDateNew(String newConfDate){
+		 //Cursor mCursor = db.rawQuery("SELECT _id, functiontitle, fucntioindate, functionStartTime, functionEndTime, functiondescription, LOCATIONNAME FROM " + SQLITE_TABLE + " WHERE fucntioindate = " + newConfDate + " AND (_id LIKE 'EXHX%' OR _id LIKE 'EXHV%')", null);
+		 Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
+		 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME },
+				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + " ASC", null, null, null, null, null);
+				 //KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
+				 //"(" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%') AND " + KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);
+		 
+		 if (mCursor != null) {
+			 mCursor.moveToFirst(); 
+		 }
+		 return mCursor;
+		 
+	 }
+	 
+	 /*public Cursor getAllSChedulesByConfDateNew(String newConfDate){	 
+			Cursor mCursor = db.query(SQLITE_TABLE, new String[] { KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME  }, KEY_fucntioindate + " =?",
+		new String[] {newConfDate}, null, null, null, null);
+		  		 if (mCursor != null) {
+		  			 mCursor.moveToFirst(); 
+		  		 }
+		  		 return mCursor;
+		 
+		}*/
 	 
 	 public Cursor fetchAllSchedulesByID(String newFunctioncd){
 
 		  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription}, 
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME}, 
 		    		KEY_ID + " = " + newFunctioncd, null,
 		      null, null, null, null);
 

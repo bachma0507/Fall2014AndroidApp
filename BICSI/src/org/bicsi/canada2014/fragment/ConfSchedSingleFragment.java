@@ -7,6 +7,7 @@ import org.bicsi.fall2014.R;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -64,6 +65,8 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				String floc = bundle.getString("LOCATIONNAME");
 				location.setText(floc);
+				
+				
 				
 				}
 				

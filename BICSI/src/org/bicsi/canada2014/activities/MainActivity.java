@@ -1338,6 +1338,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 		} else {
 			fragmentTransaction.add(R.id.content, newFragment);
 		}
+		//fragmentTransaction.addToBackStack(null);
 		fragmentTransaction.commit();
 
 		addToTabList(newFragment, tabIndex);
@@ -1627,6 +1628,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 		// You can then add a fragment using the add() method, specifying the
 		// fragment to add and the view in which to insert it. For example:
 		fragmentTransaction.add(R.id.content, newTab);
+		//fragmentTransaction.addToBackStack(null);
 		fragmentTransaction.commit();
 	}
 

@@ -20,6 +20,22 @@
         android:text="hidden"
         android:textStyle="bold"
         android:visibility="gone" />
+    
+    <TextView
+        android:id="@+id/textViewlocationname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="hidden"
+        android:textStyle="bold"
+        android:visibility="gone" />
+    
+    <TextView
+        android:id="@+id/textViewfunctiondescription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="hidden"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textViewfunctionStartTime"
@@ -63,5 +79,6 @@
         android:text="functionEndTime"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
+
 
 </RelativeLayout>

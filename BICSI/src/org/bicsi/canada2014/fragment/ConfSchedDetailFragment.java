@@ -74,7 +74,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 
 		sqlite_obj.open();
 
-		Cursor cursor = sqlite_obj.fetchAllSchedulesByDate(newConfDate);
+		Cursor cursor = sqlite_obj.getAllSChedulesByConfDateNew(newConfDate);
 		
 		
 		//Cursor cursor = sqlite_obj.fetchAllSchedules();
@@ -108,7 +108,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				R.id.textViewfunctiondate,
 				R.id.textViewfunctionStartTime,
 				R.id.textViewfunctionEndTime,
-				R.id.textViewFUNCTIONCD
+				R.id.textViewFUNCTIONCD,
+				R.id.textViewfunctiondescription,
+				R.id.textViewlocationname
 				
 
 		};
@@ -226,6 +228,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		mySingleFragment.setArguments(bundle);
 
 		mCallback.navigateToTabFragment(mySingleFragment, null); //interface method
+		
+		
+		
 		
 
 		sqlite_obj.close();

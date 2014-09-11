@@ -16,6 +16,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -124,7 +125,33 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		return v;
 		
 	}
-
+///
+	//extend the SimpleCursorAdapter to create a custom class where we 
+	 //can override the getView to change the row colors
+	 private class MyCursorAdapter extends SimpleCursorAdapter{
+	 
+	  public MyCursorAdapter(Context context, int layout, Cursor c,
+	    String[] from, int[] to, int flags) {
+	   super(context, layout, c, from, to, flags);
+	  }  
+	 
+	  @Override 
+	  public View getView(int position, View convertView, ViewGroup parent) {  
+	 
+	   //get reference to the row
+	   View view = super.getView(position, convertView, parent); 
+	   //check for odd or even to set alternate colors to the row background
+	   if(position % 2 == 0){  
+	    view.setBackgroundColor(Color.rgb(238, 233, 233));
+	   }
+	   else {
+	    view.setBackgroundColor(Color.rgb(255, 255, 255));
+	   }
+	   return view;  
+	  }  
+	 }
+	
+///
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SimpleDateFormat")
 	@Override
@@ -158,6 +185,8 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		bundle.putString("date", newConfDate);
 
 		myDetailFragment.setArguments(bundle);
+		
+		
 
 		mCallback.navigateToTabFragment(myDetailFragment, null); //interface method
 		
@@ -165,9 +194,12 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		
 
 		sqlite_obj.close();
+		
+		
 
 	}
-
+	
+	
 	@Override
 	public void onResume() {
 		super.onResume();
