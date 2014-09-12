@@ -36,15 +36,35 @@
         android:text="hidden"
         android:textStyle="bold"
         android:visibility="gone" />
+    
+    <TextView 
+        android:id="@+id/textViewfunctionStartTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="hidden"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+    
+    <TextView
+        android:id="@+id/textViewfunctionEndTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="hidden"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+    
+    
 
     <TextView
-        android:id="@+id/textViewfunctionStartTime"
+        android:id="@+id/textViewfunctionStartTimeStr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewfunctiontitle"
         android:layout_below="@+id/textViewfunctiontitle"
         android:layout_marginTop="17dp"
-        android:text="functionStartTime"
+        android:text="functionstarttime"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
 
@@ -59,26 +79,26 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewfunctionStartTime"
-        android:layout_alignBottom="@+id/textViewfunctionStartTime"
-        android:layout_toRightOf="@+id/textViewfunctionStartTime"
-        android:text=" - "
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textViewfunctionEndTime"
+        android:id="@+id/textViewfunctionEndTimeStr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView1"
         android:layout_alignBottom="@+id/textView1"
         android:layout_toRightOf="@+id/textView1"
-        android:text="functionEndTime"
+        android:text="functionendtime"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewfunctionStartTimeStr"
+        android:layout_alignBottom="@+id/textViewfunctionStartTimeStr"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/textViewfunctionStartTimeStr"
+        android:text=" - "
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
 </RelativeLayout>

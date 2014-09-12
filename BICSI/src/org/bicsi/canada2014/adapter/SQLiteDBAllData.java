@@ -24,7 +24,9 @@ public class SQLiteDBAllData {
 	public static final String KEY_LOCATIONNAME = "LOCATIONNAME";
 	public static final String KEY_fucntioindate = "fucntioindate";
 	public static final String KEY_functionStartTime = "functionStartTime";
+	public static final String KEY_functionStartTimeStr = "functionStartTimeStr";
 	public static final String KEY_functionEndTime = "functionEndTime";
+	public static final String KEY_functionEndTimeStr = "functionEndTimeStr";
 	public static final String KEY_trainer1firstname = "trainer1firstname";
 	public static final String KEY_trainer1lastname = "trainer1lastname";
 	public static final String KEY_trainer1org = "trainer1org";
@@ -73,7 +75,7 @@ public class SQLiteDBAllData {
 
 	 private final Context context;
 
-	 private static final String DATABASE_CREATE = "create table alldata (_id text not null, functiontitle text not null, functiondescription  text,LOCATIONNAME text, fucntioindate text, functionStartTime text, functionEndTime text, trainer1firstname text, trainer1lastname text,trainer1org text, trainer1city text, trainer1state text, trainer1country text, trainer2firstname text, trainer2lastname text, trainer2org text, trainer2city text, trainer2state text, trainer2country text, trainer3firstname text, trainer3lastname text, trainer3org text, trainer3city text, trainer3state text, trainer3country text, trainer4firstname text, trainer4lastname text, trainer4org text, trainer4city text, trainer4state text, trainer4country text, trainer5firstname text, trainer5lastname text, trainer5org text, trainer5city text, trainer5state text, trainer5country text, trainer6firstname text, trainer6lastname text, trainer6org text, trainer6city text, trainer6state text, trainer6country text);";
+	 private static final String DATABASE_CREATE = "create table alldata (_id text not null, functiontitle text not null, functiondescription  text,LOCATIONNAME text, fucntioindate text, functionStartTime text, functionStartTimeStr text, functionEndTime text, functionEndTimeStr text, trainer1firstname text, trainer1lastname text,trainer1org text, trainer1city text, trainer1state text, trainer1country text, trainer2firstname text, trainer2lastname text, trainer2org text, trainer2city text, trainer2state text, trainer2country text, trainer3firstname text, trainer3lastname text, trainer3org text, trainer3city text, trainer3state text, trainer3country text, trainer4firstname text, trainer4lastname text, trainer4org text, trainer4city text, trainer4state text, trainer4country text, trainer5firstname text, trainer5lastname text, trainer5org text, trainer5city text, trainer5state text, trainer5country text, trainer6firstname text, trainer6lastname text, trainer6org text, trainer6city text, trainer6state text, trainer6country text);";
 
 	 private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -128,7 +130,7 @@ public class SQLiteDBAllData {
 
 	 //---insert data into SQLite DB---
 	 
-	 	public long insert(String FUNCTIONCD, String functiontitle, String functiondescription, String LOCATIONNAME, String fucntioindate, String functionStartTime, String functionEndTime, String trainer1firstname, String trainer1lastname, String trainer1org, String trainer1city, String trainer1state, String trainer1country, String trainer2firstname, String trainer2lastname, String trainer2org, String trainer2city, String trainer2state, String trainer2country, String trainer3firstname, String trainer3lastname, String trainer3org, String trainer3city, String trainer3state, String trainer3country, String trainer4firstname, String trainer4lastname, String trainer4org, String trainer4city, String trainer4state, String trainer4country, String trainer5firstname, String trainer5lastname, String trainer5org, String trainer5city, String trainer5state, String trainer5country, String trainer6firstname, String trainer6lastname, String trainer6org, String trainer6city, String trainer6state, String trainer6country) {
+	 	public long insert(String FUNCTIONCD, String functiontitle, String functiondescription, String LOCATIONNAME, String fucntioindate, String functionStartTime, String functionStartTimeStr, String functionEndTime, String functionEndTimeStr, String trainer1firstname, String trainer1lastname, String trainer1org, String trainer1city, String trainer1state, String trainer1country, String trainer2firstname, String trainer2lastname, String trainer2org, String trainer2city, String trainer2state, String trainer2country, String trainer3firstname, String trainer3lastname, String trainer3org, String trainer3city, String trainer3state, String trainer3country, String trainer4firstname, String trainer4lastname, String trainer4org, String trainer4city, String trainer4state, String trainer4country, String trainer5firstname, String trainer5lastname, String trainer5org, String trainer5city, String trainer5state, String trainer5country, String trainer6firstname, String trainer6lastname, String trainer6org, String trainer6city, String trainer6state, String trainer6country) {
 		
 	 		ContentValues initialValues = new ContentValues();
 			initialValues.put(KEY_ID, FUNCTIONCD);
@@ -138,7 +140,9 @@ public class SQLiteDBAllData {
 				initialValues.put(KEY_LOCATIONNAME, LOCATIONNAME);
 				initialValues.put(KEY_fucntioindate, fucntioindate);
 				initialValues.put(KEY_functionStartTime, functionStartTime);
+				initialValues.put(KEY_functionStartTimeStr, functionStartTimeStr);
 				initialValues.put(KEY_functionEndTime, functionEndTime);
+				initialValues.put(KEY_functionEndTimeStr, functionEndTimeStr);
 				initialValues.put(KEY_trainer1firstname, trainer1firstname);
 				initialValues.put(KEY_trainer1lastname, trainer1lastname);
 				initialValues.put(KEY_trainer1org, trainer1org);
@@ -202,14 +206,14 @@ public class SQLiteDBAllData {
 	   Cursor mCursor = null;
 	   if (inputText == null  ||  inputText.length () == 0)  {
 	    mCursor = db.query(SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME},
-	    		KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%')", null, null, null, null, null);
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME},
+	    		KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 	    		//KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
 	   else {
 	    mCursor = db.query(true, SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME},
-	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%')", null, null, null, null, null);
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME},
+	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 	    		//KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
 	   if (mCursor != null) {
@@ -220,7 +224,7 @@ public class SQLiteDBAllData {
 	  }
 
 	 
-	 public Cursor getAllSChedulesByConfDate(String newConfDate){
+	 /*public Cursor getAllSChedulesByConfDate(String newConfDate){
 		 Cursor mCursor = db.query(SQLITE_TABLE,  new String[] {
 				 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME },
 				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%')", null, null, null, null, null);
@@ -232,13 +236,13 @@ public class SQLiteDBAllData {
 		 }
 		 return mCursor;
 		 
-	 }
+	 }*/
 	 
 	 public Cursor getAllSChedulesByConfDateNew(String newConfDate){
 		 //Cursor mCursor = db.rawQuery("SELECT _id, functiontitle, fucntioindate, functionStartTime, functionEndTime, functiondescription, LOCATIONNAME FROM " + SQLITE_TABLE + " WHERE fucntioindate = " + newConfDate + " AND (_id LIKE 'EXHX%' OR _id LIKE 'EXHV%')", null);
 		 Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-		 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME },
-				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + " ASC", null, null, null, null, null);
+		 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME },
+				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 				 //KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 				 //"(" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%') AND " + KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);
 		 

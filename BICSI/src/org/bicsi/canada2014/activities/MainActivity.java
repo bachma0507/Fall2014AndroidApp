@@ -617,6 +617,8 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 	  
 	  private ProgressDialog pDialog;
 	  private static final String url = "https://webservice.bicsi.org/json/reply/MobSession?SessionAltCd=CN-FALL-CA-0914";
+	  private String myLongStr;
+	  private String myLongStrEnd;
 	  
 	  private static final String TAG_FUNCTIONS = "Functions";
 		/*private static final String TAG_FUNCTIONCD = "FUNCTIONCD";
@@ -712,6 +714,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 						
 						
 						
+						
 		       			 
 					    /*String FUNCTIONCD= c.optString("FUNCTIONCD").toString();
 						String functiontitle= c.optString("functiontitle").toString();
@@ -801,11 +804,31 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 						list40.add(c.getString("trainer6org"));
 						list41.add(c.getString("trainer6city"));
 						list42.add(c.getString("trainer6state"));
-						list43.add(c.getString("trainer6country"));   
+						list43.add(c.getString("trainer6country")); 
+						
+						
+						String fucntioindate= c.optString("fucntioindate").toString();
+						String functionStartTime= c.optString("functionStartTime").toString();
+						String functionEndTime= c.optString("functionEndTime").toString();
+						
+						String myDate = fucntioindate + ", " + functionStartTime;
+						String myEndDate = fucntioindate + ", " + functionEndTime;
+						
+						//System.out.println("***MYDATE STRING IS: " + myDate);
+						
+						//String myTestDateTime = "09-28-2014, 01:30 PM";
 						
 						
 						
-
+						//System.out.println("***MYDATE LONG IS: " + longDate(myDate));
+						
+						Long myLDate = longDate(myDate);
+						Long myLEndDate = longDate(myEndDate);
+					
+						myLongStr = String.valueOf(myLDate);
+						myLongStrEnd = String.valueOf(myLEndDate);
+						
+						//System.out.println("***MYDATE LONGTOSTR IS: " + myLongStr);
 	                     
 	                       /*OutputData += "FUNCTIONCD: "+ FUNCTIONCD +" "
 	                                   + "Title: "+ functiontitle +" "
@@ -826,7 +849,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 	                       for(int j=0; j<list1.size(); j++) {
 	                    	   
 	                    		
-	                      		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString(), list4.get(j).toString(), list5.get(j).toString(), list6.get(j).toString(), list7.get(j).toString(), list8.get(j).toString(), list9.get(j).toString(), list10.get(j).toString(), list11.get(j).toString(), list12.get(j).toString(), list13.get(j).toString(), list14.get(j).toString(), list15.get(j).toString(), list16.get(j).toString(), list17.get(j).toString(), list18.get(j).toString(), list19.get(j).toString(), list20.get(j).toString(), list21.get(j).toString(), list22.get(j).toString(), list23.get(j).toString(), list24.get(j).toString(), list25.get(j).toString(), list26.get(j).toString(), list27.get(j).toString(), list28.get(j).toString(), list29.get(j).toString(), list30.get(j).toString(), list31.get(j).toString(), list32.get(j).toString(), list33.get(j).toString(), list34.get(j).toString(), list35.get(j).toString(), list36.get(j).toString(), list37.get(j).toString(), list38.get(j).toString(), list39.get(j).toString(), list40.get(j).toString(), list41.get(j).toString(), list42.get(j).toString(), list43.get(j).toString());
+	                      		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString(), list4.get(j).toString(), list5.get(j).toString(), myLongStr, list6.get(j).toString(), myLongStrEnd, list7.get(j).toString(), list8.get(j).toString(), list9.get(j).toString(), list10.get(j).toString(), list11.get(j).toString(), list12.get(j).toString(), list13.get(j).toString(), list14.get(j).toString(), list15.get(j).toString(), list16.get(j).toString(), list17.get(j).toString(), list18.get(j).toString(), list19.get(j).toString(), list20.get(j).toString(), list21.get(j).toString(), list22.get(j).toString(), list23.get(j).toString(), list24.get(j).toString(), list25.get(j).toString(), list26.get(j).toString(), list27.get(j).toString(), list28.get(j).toString(), list29.get(j).toString(), list30.get(j).toString(), list31.get(j).toString(), list32.get(j).toString(), list33.get(j).toString(), list34.get(j).toString(), list35.get(j).toString(), list36.get(j).toString(), list37.get(j).toString(), list38.get(j).toString(), list39.get(j).toString(), list40.get(j).toString(), list41.get(j).toString(), list42.get(j).toString(), list43.get(j).toString());
 	                      		
 	                      		
 	                      	}
@@ -1081,20 +1104,20 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 */
 }
   
-  public int intDate (String sdate){
+  public long longDate (String sdate){
 	   
-	  int intDate = (int) System.currentTimeMillis(); //Initializes var with current time in case parsing fails
-	    
-	  SimpleDateFormat format = new SimpleDateFormat("HH:mm a", Locale.US); //Describes date pattern
+	  //int intDate = (int) System.currentTimeMillis(); //Initializes var with current time in case parsing fails
+	  long longDate = System.currentTimeMillis(); //Initializes var with current time in case parsing fails
+	  SimpleDateFormat format = new SimpleDateFormat("mm-dd-yyyy, hh:mm a", Locale.US); //Describes date pattern
 	  format.setLenient(false); //enforces strict pattern matching  
 	     
 	  try {
 	   Date date = format.parse(sdate); //converts string to a date object
-	   intDate = (int) date.getTime(); 
+	   longDate = date.getTime(); 
 	  } catch (ParseException e) {
 	  }
 	     
-	  return intDate;  
+	  return longDate;  
 	  }
 
   

@@ -38,8 +38,8 @@ public class ConfSchedSingleFragment extends Fragment  {
 		
 		title = (TextView)v.findViewById(R.id.functiontitle);
 		date = (TextView)v.findViewById(R.id.functiondate);
-		start = (TextView)v.findViewById(R.id.functionstarttime);
-		end = (TextView)v.findViewById(R.id.functionendtime);
+		start = (TextView)v.findViewById(R.id.functionstarttimestr);
+		end = (TextView)v.findViewById(R.id.functionendtimestr);
 		desc = (TextView)v.findViewById(R.id.functiondecsription);
 		location = (TextView)v.findViewById(R.id.functionlocation);
 		
@@ -54,10 +54,10 @@ public class ConfSchedSingleFragment extends Fragment  {
 				String fdate = bundle.getString("functiondate");
 				date.setText(fdate);
 				
-				String fstart = bundle.getString("functionStartTime");
+				String fstart = bundle.getString("functionStartTimeStr");
 				start.setText(fstart);
 				
-				String fend = bundle.getString("functionEndTime");
+				String fend = bundle.getString("functionEndTimeStr");
 				end.setText(fend);
 				
 				String fdesc = bundle.getString("functiondescription");

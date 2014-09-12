@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.bicsi.fall2014.R;
+import org.bicsi.canada2014.adapter.ColorArrayAdapter;
 import org.bicsi.canada2014.adapter.SQLiteDBAllData;
 import org.bicsi.canada2014.common.MizeUtil.NavigateToTabFragmentListener;
 import android.app.Activity;
@@ -15,6 +16,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -39,6 +41,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 	private SQLiteDBAllData sqlite_obj;
 	private SimpleCursorAdapter dataAdapter;
 	public String newConfDate;
+	
 
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -93,7 +96,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				SQLiteDBAllData.KEY_functiontitle,
 				SQLiteDBAllData.KEY_fucntioindate,
 				SQLiteDBAllData.KEY_functionStartTime,
+				SQLiteDBAllData.KEY_functionStartTimeStr,
 				SQLiteDBAllData.KEY_functionEndTime,
+				SQLiteDBAllData.KEY_functionEndTimeStr,
 				SQLiteDBAllData.KEY_ID,
 				SQLiteDBAllData.KEY_functiondescription,
 				SQLiteDBAllData.KEY_LOCATIONNAME
@@ -107,7 +112,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				R.id.textViewfunctiontitle,
 				R.id.textViewfunctiondate,
 				R.id.textViewfunctionStartTime,
+				R.id.textViewfunctionStartTimeStr,
 				R.id.textViewfunctionEndTime,
+				R.id.textViewfunctionEndTimeStr,
 				R.id.textViewFUNCTIONCD,
 				R.id.textViewfunctiondescription,
 				R.id.textViewlocationname
@@ -126,12 +133,23 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				to,
 				0);
 		
+	    
+	    //v.setBackgroundResource(R.drawable.listview_selector_even);
+	   
 		
 
 		ListView listView = (ListView)v. findViewById(android.R.id.list);
 		// Assign adapter to ListView
 		listView.setAdapter(dataAdapter);
 		listView.setOnItemClickListener(this);
+		
+		
+		/*if ( position % 2 == 0){
+	          v.setBackgroundResource(R.drawable.listview_selector_even);
+			}
+	        else{
+	            v.setBackgroundResource(R.drawable.listview_selector_odd);
+	        }*/
 
 
 		EditText myFilter = (EditText)v. findViewById(R.id.myFilter);
@@ -156,6 +174,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				
 			}
 		});
+		
 
 		return v;
 		
@@ -195,10 +214,10 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				cursor.getString(cursor.getColumnIndexOrThrow("fucntioindate"));
 		
 		String functionStart = 
-				cursor.getString(cursor.getColumnIndexOrThrow("functionStartTime"));
+				cursor.getString(cursor.getColumnIndexOrThrow("functionStartTimeStr"));
 		
 		String functionEnd = 
-				cursor.getString(cursor.getColumnIndexOrThrow("functionEndTime"));
+				cursor.getString(cursor.getColumnIndexOrThrow("functionEndTimeStr"));
 		
 		String functionDescription = 
 				cursor.getString(cursor.getColumnIndexOrThrow("functiondescription"));
@@ -218,8 +237,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		bundle.putString("_id", newFunctioncd);
 		bundle.putString("functiontitle", functionTitle);
 		bundle.putString("fucntioindate", functionDate);
-		bundle.putString("functionStartTime", functionStart);
-		bundle.putString("functionEndTime", functionEnd);
+		bundle.putString("functionStartTimeStr", functionStart);
+		bundle.putString("functionEndTimeStr", functionEnd);
 		bundle.putString("functiondescription", functionDescription);
 		bundle.putString("LOCATIONNAME", functionLocation);
 		
@@ -243,7 +262,6 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		((MainActivity)getActivity()).updateTracker("Home Tab");
 	}
 	
-
 
 }
 
