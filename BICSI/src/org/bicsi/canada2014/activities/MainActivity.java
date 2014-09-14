@@ -621,11 +621,9 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 	  private String myLongStrEnd;
 	  
 	  private static final String TAG_FUNCTIONS = "Functions";
-		/*private static final String TAG_FUNCTIONCD = "FUNCTIONCD";
-		private static final String TAG_FUNCTIONTITLE = "functiontitle";
-	    private static final String TAG_FUNCTIONDESCRIPTION = "functiondescription";*/
 	  
 	  	private SQLiteDBAllData sqlite_obj = new SQLiteDBAllData(mContext);
+	  	
 	  	List<String> list1,list2,list3,list4,list5,list6,list7,list8,list9,list10,list11,list12,list13,list14,list15,list16,list17,list18,list19,list20,list21,list22,list23,list24,list25,list26,list27,list28,list29,list30,list31,list32,list33,list34,list35,list36,list37,list38,list39,list40,list41,list42,list43;
 	  	
 	  	JSONArray functions = null;
@@ -638,6 +636,10 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 			pDialog.setMessage("Updating data...");
 			pDialog.setCancelable(false);
 			pDialog.show();
+			
+			sqlite_obj.open();
+			sqlite_obj.deleteAll();
+			sqlite_obj.close();
 
 		}
 	  	
@@ -814,22 +816,13 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 						String myDate = fucntioindate + ", " + functionStartTime;
 						String myEndDate = fucntioindate + ", " + functionEndTime;
 						
-						//System.out.println("***MYDATE STRING IS: " + myDate);
-						
-						//String myTestDateTime = "09-28-2014, 01:30 PM";
-						
-						
-						
-						//System.out.println("***MYDATE LONG IS: " + longDate(myDate));
-						
 						Long myLDate = longDate(myDate);
 						Long myLEndDate = longDate(myEndDate);
 					
 						myLongStr = String.valueOf(myLDate);
 						myLongStrEnd = String.valueOf(myLEndDate);
 						
-						//System.out.println("***MYDATE LONGTOSTR IS: " + myLongStr);
-	                     
+						
 	                       /*OutputData += "FUNCTIONCD: "+ FUNCTIONCD +" "
 	                                   + "Title: "+ functiontitle +" "
 	                                   + "Desc: "+ functiondescription +" "
@@ -837,14 +830,6 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 	                     
 	                       sqlite_obj.open();
 	                       
-	                       /*System.out.println("List1 string FUNCTIONCD for insert statement: " + list1.toString());
-	                       System.out.println("List1 string functiontitle for insert statement: " + list2.toString());
-	                       System.out.println("List1 string functiondescription for insert statement: " + list3.toString());
-	                       System.out.println("List1 string LOCATIONNAME for insert statement: " + list4.toString());
-	                       System.out.println("List1 string fucntioindate for insert statement: " + list5.toString());
-	                       System.out.println("List1 string functionStartTime for insert statement: " + list6.toString());
-	                       System.out.println("List1 string functionEndTime for insert statement: " + list7.toString());
-	                       System.out.println("List1 string trainer1firstname for insert statement: " + list8.toString());*/
 						
 	                       for(int j=0; j<list1.size(); j++) {
 	                    	   
@@ -860,31 +845,7 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 					
 	                   System.out.println(OutputData);
 						
-						/*String FUNCTIONCD = c.getString(TAG_FUNCTIONCD);
-						String trainer1firstname = c.getString(TAG_TRAINER1FIRSTNAME);
-						String trainer1lastname = c.getString(TAG_TRAINER1LASTNAME);
-                        String LOCATIONNAME = c.getString(TAG_LOCATIONNAME);
-						String address = c.getString(TAG_ADDRESS);
-						String gender = c.getString(TAG_GENDER);
-
-						// Phone node is JSON Object
-						JSONObject phone = c.getJSONObject(TAG_PHONE);
-						String mobile = phone.getString(TAG_PHONE_MOBILE);
-						String home = phone.getString(TAG_PHONE_HOME);
-						String office = phone.getString(TAG_PHONE_OFFICE);
-
-						// tmp hashmap for single contact
-						HashMap<String, String> contact = new HashMap<String, String>();
-
-						// adding each child node to HashMap key => value
-						contact.put(TAG_FUNCTIONCD, FUNCTIONCD);
-						contact.put(TAG_TRAINER1FIRSTNAME, trainer1firstname);
-						contact.put(TAG_TRAINER1LASTNAME, trainer1lastname);
-						contact.put(TAG_LOCATIONNAME, LOCATIONNAME);*/
-
-						// adding contact to contact list
-						//functionList.add(contact);
-					//}
+						
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -901,207 +862,10 @@ MizeUtil.NavigateToTabFragmentListener, PromptReturnListener, OnClickListener /*
 			// Dismiss the progress dialog
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-			/**
-			 * Updating parsed JSON data into ListView
-			 * */
-			/*ListAdapter adapter = new SimpleAdapter(
-					MainActivity.this, functionList,
-					R.layout.list_item, new String[] { TAG_TRAINER1FIRSTNAME, TAG_TRAINER1LASTNAME,
-                    TAG_LOCATIONNAME }, new int[] { R.id.trainer1firstname,
-							R.id.trainer1lastname, R.id.LOCATIONNAME });
-
-			setListAdapter(adapter);*/
+			
 		}
 		
-		/*private final HttpClient Client = new DefaultHttpClient();
-      private String Content;
-      private String Error = null;
-      private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
-      String data =""; 
-    
-      int sizeData = 0;  
-    
-     
-     
-      protected void onPreExecute() {
-          // NOTE: You can call UI Element here.
-          
-          //Start Progress Dialog (Message)
-        
-          Dialog.setMessage("Updating data...");
-          Dialog.show();
-         
-          try{
-              // Set Request parameter
-              data +="&" + URLEncoder.encode("data", "UTF-8");
-                 
-          } catch (UnsupportedEncodingException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-          } 
-         
-      }
-
-      // Call after onPreExecute method
-      protected Void doInBackground(String... urls) {
-         
-          *//************ Make Post Call To Web Server ***********//*
-          BufferedReader reader=null;
-
-               // Send data 
-              try
-              { 
-               
-                 // Defined URL  where to send data
-                 URL url = new URL(urls[0]);
-                  
-                // Send POST data request
-    
-                URLConnection conn = url.openConnection(); 
-                conn.setDoOutput(true); 
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-                wr.write( data ); 
-                wr.flush(); 
-           
-                // Get the server response 
-                
-                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-             
-                  // Read Server Response
-                  while((line = reader.readLine()) != null)
-                      {
-                             // Append server response in string
-                             sb.append(line + " ");
-                      }
-                 
-                  // Append Server Response To Content String 
-                 Content = sb.toString();
-              }
-              catch(Exception ex)
-              {
-                  Error = ex.getMessage();
-              }
-              finally
-              {
-                  try
-                  {
-      
-                      reader.close();
-                  }
-    
-                  catch(Exception ex) {}
-              }
-         
-          *//*****************************************************//*
-          return null;
-      }
-      
-      protected void onPostExecute(Void unused) {
-          // NOTE: You can call UI Element here.
-          
-          // Close progress dialog
-          Dialog.dismiss();
-          
-          if (Error != null) {
-              
-              System.out.println("Output : "+Error);
-              
-          } else {
-           
-              // Show Response Json On Screen (activity)
-          	System.out.println( Content );
-             
-           *//****************** Start Parse Response JSON Data *************//*
-             
-              String OutputData = "";
-              //JSONObject jsonResponse;
-              
-              try {
-            	  String TAG_FUNCTIONS = "Functions";
-            	  
-                   *//****** Creates a new JSONObject with name/value mappings from the JSON string. ********//*
-                   //jsonResponse = new JSONObject(Content);
-            	  /////NEW
-            	  JSONObject jsonObj = new JSONObject(Content);
-            	  functions = jsonObj.getJSONArray(TAG_FUNCTIONS);
-            	  
-            	  for (int i = 0; i < functions.length(); i++) {
-						JSONObject c = functions.getJSONObject(i);
-            	  
-                   
-                  /////END NEW 
-                   *//***** Returns the value mapped by name if it exists and is a JSONArray. ***//*
-                   *//*******  Returns null otherwise.  *******//*
-                   //JSONArray jsonMainNode = jsonResponse.optJSONArray("Functions");
-            	
-              	//JSONArray jsonMainNode = new JSONArray(Content);
-                   
-                   *//*********** Process each JSON Node ************//*
-
-                   //int lengthJsonArr = jsonMainNode.length();  
-                 
-                 list1 = new ArrayList<String>();
-       			 list2 = new ArrayList<String>();
-       			 list3 = new ArrayList<String>();
-       			 
-
-                   for(int i=0; i < lengthJsonArr; i++) 
-                   {
-                       *//****** Get Object for each JSON node.***********//*
-                       JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-                       
-                       *//******* Fetch node values **********//*
-                       String id       = c.optString("FUNCTIONCD").toString();
-                       String title     = c.optString("functiontitle").toString();
-                       String desc = c.optString("functiondescription").toString();
-                     
-                       list1.add(c.getString("id"));
-                       list2.add(c.getString("title"));
-                       list3.add(c.getString("desc"));
-                       
-                     
-                       OutputData += "ID: "+ id +" "
-                                   + "Title: "+ title +" "
-                                   + "Desc: "+ desc +" "
-                                   +"\n";
-                     
-                       sqlite_obj.open();
-                 	
-                   	sqlite_obj.deleteAll();
-                 	
-                   	for(int j=0; j<list1.size(); j++) {
-                 		
-                   		sqlite_obj.insert(list1.get(j).toString(), list2.get(j).toString(), list3.get(j).toString());
-                   		
-                   		
-                   	}
-                   	
-                   	sqlite_obj.close();
-                      
-                  }
-               *//****************** End Parse Response JSON Data *************//*    
-                  
-                   //Show Parsed Output on screen (activity)
-                   jsonParsed.setText( OutputData );
-                   System.out.println(OutputData);
-                   
-                 //Generate ListView from SQLite Database
-                   //displayListView();
-                  
-                   
-                   
-                  
-                   
-               } catch (JSONException e) {
-       
-                   e.printStackTrace();
-               }
-      		}
-              
-        }
-*/
+		
 }
   
   public long longDate (String sdate){

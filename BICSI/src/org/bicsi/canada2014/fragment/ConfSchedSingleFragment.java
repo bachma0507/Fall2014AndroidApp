@@ -27,6 +27,9 @@ public class ConfSchedSingleFragment extends Fragment  {
 	TextView end;
 	TextView desc;
 	TextView location;
+	TextView trainer1fname;
+	TextView trainer1lname;
+	TextView speakerslabel;
 	
 	
 	@Override
@@ -42,16 +45,29 @@ public class ConfSchedSingleFragment extends Fragment  {
 		end = (TextView)v.findViewById(R.id.functionendtimestr);
 		desc = (TextView)v.findViewById(R.id.functiondecsription);
 		location = (TextView)v.findViewById(R.id.functionlocation);
+		trainer1fname = (TextView)v.findViewById(R.id.trainer1fname);
+		trainer1lname = (TextView)v.findViewById(R.id.trainer1lname);
+		speakerslabel = (TextView)v.findViewById(R.id.speakers_label);
+		
 		
 		Bundle bundle = getArguments();
 				if(bundle != null){
 				
 				newFunctioncd = bundle.getString("_id");
 				
+				System.out.println("The value of id is: " + newFunctioncd);
+				
+				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") == true){
+					speakerslabel.setVisibility(View.VISIBLE);
+				}
+				else{
+					speakerslabel.setVisibility(View.GONE);
+				}
+				
 				String ftitle = bundle.getString("functiontitle");
 				title.setText(ftitle);
 				
-				String fdate = bundle.getString("functiondate");
+				String fdate = bundle.getString("fucntioindate");
 				date.setText(fdate);
 				
 				String fstart = bundle.getString("functionStartTimeStr");
@@ -65,6 +81,12 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				String floc = bundle.getString("LOCATIONNAME");
 				location.setText(floc);
+				
+				String t1fname = bundle.getString("trainer1firstname");
+				trainer1fname.setText(t1fname);
+				
+				String t1lname = bundle.getString("trainer1lastname");
+				trainer1lname.setText(t1lname);
 				
 				
 				

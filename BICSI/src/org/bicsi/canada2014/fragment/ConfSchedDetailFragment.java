@@ -39,7 +39,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 
 	private NavigateToTabFragmentListener mCallback;//interface from MizeUtil
 	private SQLiteDBAllData sqlite_obj;
-	private SimpleCursorAdapter dataAdapter;
+	private MyCursorAdapter dataAdapter;
 	public String newConfDate;
 	
 
@@ -71,13 +71,15 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				
 				}
 
-				System.out.println("BUNDLE DATE PASSED IS " + newConfDate);
+				//System.out.println("BUNDLE DATE PASSED IS " + newConfDate);
 
 		sqlite_obj = new SQLiteDBAllData(getActivity());
 
 		sqlite_obj.open();
 
 		Cursor cursor = sqlite_obj.getAllSChedulesByConfDateNew(newConfDate);
+		//cursor.getCount();
+		System.out.println("Table row count is: " + cursor.getCount());
 		
 		
 		//Cursor cursor = sqlite_obj.fetchAllSchedules();
@@ -101,7 +103,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				SQLiteDBAllData.KEY_functionEndTimeStr,
 				SQLiteDBAllData.KEY_ID,
 				SQLiteDBAllData.KEY_functiondescription,
-				SQLiteDBAllData.KEY_LOCATIONNAME
+				SQLiteDBAllData.KEY_LOCATIONNAME,
+				SQLiteDBAllData.KEY_trainer1firstname,
+				SQLiteDBAllData.KEY_trainer1lastname
 				
 
 		};
@@ -117,15 +121,16 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				R.id.textViewfunctionEndTimeStr,
 				R.id.textViewFUNCTIONCD,
 				R.id.textViewfunctiondescription,
-				R.id.textViewlocationname
-				
+				R.id.textViewlocationname,
+				R.id.trainer1fname,
+				R.id.trainer1lname
 
 		};
 
 		
 		// create the adapter using the cursor pointing to the desired data 
 		//as well as the layout information
-		dataAdapter = new SimpleCursorAdapter(
+		dataAdapter = new MyCursorAdapter(
 				
 				getActivity(), R.layout.confschedule_detail_info_list, 
 				cursor, 
@@ -225,6 +230,12 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		String functionLocation = 
 				cursor.getString(cursor.getColumnIndexOrThrow("LOCATIONNAME"));
 		
+		String trainer1firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer1firstname"));
+		
+		String trainer1lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer1lastname"));
+		
 		
 
 
@@ -241,6 +252,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		bundle.putString("functionEndTimeStr", functionEnd);
 		bundle.putString("functiondescription", functionDescription);
 		bundle.putString("LOCATIONNAME", functionLocation);
+		bundle.putString("trainer1firstname", trainer1firstname);
+		bundle.putString("trainer1lastname", trainer1lastname);
 		
 		
 
@@ -261,6 +274,32 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		super.onResume();
 		((MainActivity)getActivity()).updateTracker("Home Tab");
 	}
+	
+	//extend the SimpleCursorAdapter to create a custom class where we 
+		 //can override the getView to change the row colors
+		 private class MyCursorAdapter extends SimpleCursorAdapter{
+		 
+		  public MyCursorAdapter(Context context, int layout, Cursor c,
+		    String[] from, int[] to, int flags) {
+		   super(context, layout, c, from, to, flags);
+		  }  
+		 
+		  @Override 
+		  public View getView(int position, View convertView, ViewGroup parent) {  
+		 
+		   //get reference to the row
+		   View view = super.getView(position, convertView, parent); 
+		   //check for odd or even to set alternate colors to the row background
+		   if(position % 2 == 0){  
+		    view.setBackgroundColor(Color.rgb(238, 233, 233));
+		   }
+		   else {
+		    view.setBackgroundColor(Color.rgb(255, 255, 255));
+		   }
+		   return view;  
+		  }  
+
+		 }
 	
 
 }

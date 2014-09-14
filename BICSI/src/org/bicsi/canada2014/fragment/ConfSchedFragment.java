@@ -39,7 +39,7 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 
 	private NavigateToTabFragmentListener mCallback;//interface from MizeUtil
 	private SQLiteDBcShed sqlite_obj;
-	private SimpleCursorAdapter dataAdapter;
+	private MyCursorAdapter dataAdapter;
 
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -87,7 +87,7 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 
 		// create the adapter using the cursor pointing to the desired data 
 		//as well as the layout information
-		dataAdapter = new SimpleCursorAdapter(
+		dataAdapter = new MyCursorAdapter(
 				getActivity(), R.layout.confschedule_info, 
 				cursor, 
 				columns, 
@@ -205,6 +205,8 @@ public class ConfSchedFragment extends Fragment implements AdapterView.OnItemCli
 		super.onResume();
 		((MainActivity)getActivity()).updateTracker("Home Tab");
 	}
+	
+	
 
 
 }

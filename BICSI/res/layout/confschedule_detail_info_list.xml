@@ -10,6 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="functiontitle"
+        android:typeface="sans"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold" />
 
@@ -63,7 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewfunctiontitle"
         android:layout_below="@+id/textViewfunctiontitle"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="30dp"
+        android:textColor="#343434"
         android:text="functionstarttime"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
@@ -74,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewfunctiontitle"
+        android:layout_marginTop="5dip"
+        android:textColor="#343434"
         android:text="functiondate"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
@@ -85,6 +89,7 @@
         android:layout_alignBaseline="@+id/textView1"
         android:layout_alignBottom="@+id/textView1"
         android:layout_toRightOf="@+id/textView1"
+        android:textColor="#343434"
         android:text="functionendtime"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textStyle="bold" />
@@ -96,6 +101,7 @@
         android:layout_alignBaseline="@+id/textViewfunctionStartTimeStr"
         android:layout_alignBottom="@+id/textViewfunctionStartTimeStr"
         android:layout_marginLeft="17dp"
+        android:textColor="#343434"
         android:layout_toRightOf="@+id/textViewfunctionStartTimeStr"
         android:text=" - "
         android:textAppearance="?android:attr/textAppearanceSmall"

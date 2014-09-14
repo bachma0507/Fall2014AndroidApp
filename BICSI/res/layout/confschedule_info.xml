@@ -12,6 +12,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
              android:textStyle="bold"
+             android:typeface="sans"
             android:text="confday"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     
@@ -20,6 +21,8 @@
             android:id="@+id/textViewConfDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:textColor="#343434"
             android:text="confdate"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold" />
