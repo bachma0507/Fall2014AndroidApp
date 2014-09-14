@@ -9,6 +9,7 @@
         android:id="@+id/textViewfunctiontitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="#996633"
         android:text="functiontitle"
         android:typeface="sans"
         android:textAppearance="?android:attr/textAppearanceMedium"

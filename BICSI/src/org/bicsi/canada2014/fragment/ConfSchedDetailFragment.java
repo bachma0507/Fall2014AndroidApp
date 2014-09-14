@@ -105,7 +105,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				SQLiteDBAllData.KEY_functiondescription,
 				SQLiteDBAllData.KEY_LOCATIONNAME,
 				SQLiteDBAllData.KEY_trainer1firstname,
-				SQLiteDBAllData.KEY_trainer1lastname
+				SQLiteDBAllData.KEY_trainer1lastname,
+				SQLiteDBAllData.KEY_trainer2firstname,
+				SQLiteDBAllData.KEY_trainer2lastname
 				
 
 		};
@@ -123,7 +125,9 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				R.id.textViewfunctiondescription,
 				R.id.textViewlocationname,
 				R.id.trainer1fname,
-				R.id.trainer1lname
+				R.id.trainer1lname,
+				R.id.trainer2fname,
+				R.id.trainer2lname
 
 		};
 
@@ -238,6 +242,11 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		String trainer1lastname = 
 				cursor.getString(cursor.getColumnIndexOrThrow("trainer1lastname"));
 		
+		String trainer2firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer2firstname"));
+		
+		String trainer2lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer2lastname"));
 		
 
 
@@ -256,6 +265,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		bundle.putString("LOCATIONNAME", functionLocation);
 		bundle.putString("trainer1firstname", trainer1firstname);
 		bundle.putString("trainer1lastname", trainer1lastname);
+		bundle.putString("trainer2firstname", trainer2firstname);
+		bundle.putString("trainer2lastname", trainer2lastname);
 		
 		
 
@@ -293,7 +304,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		   View view = super.getView(position, convertView, parent); 
 		   //check for odd or even to set alternate colors to the row background
 		   if(position % 2 == 0){  
-		    view.setBackgroundColor(Color.rgb(238, 233, 233));
+		    view.setBackgroundColor(Color.rgb(246, 235, 253));
 		   }
 		   else {
 		    view.setBackgroundColor(Color.rgb(255, 255, 255));

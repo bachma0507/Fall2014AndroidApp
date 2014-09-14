@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class ConfSchedSingleFragment extends Fragment  {
 	
-	
+	private NavigateToTabFragmentListener mCallback;
+	private Fragment newFragment = new WebviewFragment();
 	public String newFunctioncd;
 	
 	TextView title;
@@ -29,7 +31,21 @@ public class ConfSchedSingleFragment extends Fragment  {
 	TextView location;
 	TextView trainer1fname;
 	TextView trainer1lname;
+	TextView trainer2fname;
+	TextView trainer2lname;
 	TextView speakerslabel;
+	Button surveybutton;
+	
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		try {
+			mCallback = (NavigateToTabFragmentListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement NavigateToListener");
+		}
+	}
 	
 	
 	@Override
@@ -47,7 +63,10 @@ public class ConfSchedSingleFragment extends Fragment  {
 		location = (TextView)v.findViewById(R.id.functionlocation);
 		trainer1fname = (TextView)v.findViewById(R.id.trainer1fname);
 		trainer1lname = (TextView)v.findViewById(R.id.trainer1lname);
+		trainer2fname = (TextView)v.findViewById(R.id.trainer2fname);
+		trainer2lname = (TextView)v.findViewById(R.id.trainer2lname);
 		speakerslabel = (TextView)v.findViewById(R.id.speakers_label);
+		surveybutton = (Button)v.findViewById(R.id.survey_btn);
 		
 		
 		Bundle bundle = getArguments();
@@ -57,9 +76,11 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") || newFunctioncd.contains("GS_TUES") || newFunctioncd.contains("GS_THURS") == true){
 					speakerslabel.setVisibility(View.VISIBLE);
+					surveybutton.setVisibility(View.VISIBLE);
 				}
 				else{
 					speakerslabel.setVisibility(View.GONE);
+					surveybutton.setVisibility(View.GONE);
 				}
 				
 				String ftitle = bundle.getString("functiontitle");
@@ -86,9 +107,43 @@ public class ConfSchedSingleFragment extends Fragment  {
 				String t1lname = bundle.getString("trainer1lastname");
 				trainer1lname.setText(t1lname);
 				
+				String t2fname = bundle.getString("trainer2firstname");
+				trainer2fname.setText(t2fname);
+				
+				if(t2fname.isEmpty() == true){
+					trainer2fname.setVisibility(View.GONE);
+					trainer2lname.setVisibility(View.GONE);
+				}
+				
+				String t2lname = bundle.getString("trainer2lastname");
+				trainer2lname.setText(t2lname);
+				
+				surveybutton.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						String urlEndStr = newFunctioncd.replace("'", "");
+						openInternalWebview("https://www.research.net/s/" + urlEndStr);
+						System.out.println("https://www.research.net/s/" + urlEndStr);
+					}
+				});
+				
 				}
 				
 				return v;
+	}
+	
+	private void openInternalWebview(CharSequence urlToOpen) {
+		if (urlToOpen == null) {
+			return;
+		}
+		String urlString = urlToOpen.toString();
+		((MainActivity)getActivity()).mWebViewURL = urlString;
+		mCallback.navigateToTabFragment(newFragment, null);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		((MainActivity)getActivity()).updateTracker("Home Tab");
 	}
 	
 	

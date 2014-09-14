@@ -206,13 +206,13 @@ public class SQLiteDBAllData {
 	   Cursor mCursor = null;
 	   if (inputText == null  ||  inputText.length () == 0)  {
 	    mCursor = db.query(SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname},
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname, KEY_trainer2firstname, KEY_trainer2lastname},
 	    		KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 	    		//KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
 	   else {
 	    mCursor = db.query(true, SQLITE_TABLE, new String[] {
-	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname},
+	    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname, KEY_trainer2firstname, KEY_trainer2lastname},
 	    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 	    		//KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 	   }
@@ -241,7 +241,7 @@ public class SQLiteDBAllData {
 	 public Cursor getAllSChedulesByConfDateNew(String newConfDate){
 		 //Cursor mCursor = db.rawQuery("SELECT _id, functiontitle, fucntioindate, functionStartTime, functionEndTime, functiondescription, LOCATIONNAME FROM " + SQLITE_TABLE + " WHERE fucntioindate = " + newConfDate + " AND (_id LIKE 'EXHX%' OR _id LIKE 'EXHV%')", null);
 		 Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-		 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname },
+		 KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME, KEY_trainer1firstname, KEY_trainer1lastname, KEY_trainer2firstname, KEY_trainer2lastname },
 				 KEY_fucntioindate + " = " + newConfDate + " AND (" + KEY_ID + " LIKE 'ATT%' OR " + KEY_ID + " LIKE 'BIC%' OR " + KEY_ID + " LIKE 'BREA%' OR " + KEY_ID + " LIKE 'COM%' OR " + KEY_ID + " LIKE 'CONC%' OR " + KEY_ID + " LIKE 'CONF%' OR " + KEY_ID + " LIKE 'CRED_E%' OR " + KEY_ID + " LIKE 'EH%' OR " + KEY_ID + " LIKE 'GS_THURS%' OR " + KEY_ID + " LIKE 'GS_TUES_%' OR " + KEY_ID + " LIKE 'PRECON%') ORDER BY " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
 				 //KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 				 //"(" + KEY_ID + " NOT LIKE 'EXHX%' OR " + KEY_ID + " NOT LIKE 'EXHV%') AND " + KEY_fucntioindate + " = " + newConfDate, null, null, null, null, null);

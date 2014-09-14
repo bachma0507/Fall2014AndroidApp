@@ -209,7 +209,7 @@ public class EhallSchedFragment2 extends Fragment /*implements AdapterView.OnIte
 	   View view = super.getView(position, convertView, parent); 
 	   //check for odd or even to set alternate colors to the row background
 	   if(position % 2 == 0){  
-	    view.setBackgroundColor(Color.rgb(238, 233, 233));
+	    view.setBackgroundColor(Color.rgb(246, 235, 253));
 	   }
 	   else {
 	    view.setBackgroundColor(Color.rgb(255, 255, 255));
