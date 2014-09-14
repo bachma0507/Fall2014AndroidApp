@@ -36,9 +36,9 @@ import android.widget.Toast;
 import org.bicsi.canada2014.activities.MainActivity;
 
 
-public class EhallSchedFragment2 extends Fragment implements AdapterView.OnItemClickListener{
+public class EhallSchedFragment2 extends Fragment /*implements AdapterView.OnItemClickListener*/{
 
-	private NavigateToTabFragmentListener mCallback;//interface from MizeUtil
+	//private NavigateToTabFragmentListener mCallback;//interface from MizeUtil
 	private SQLiteDB sqlite_obj;
 	private MyCursorAdapter dataAdapter;
 
@@ -47,7 +47,7 @@ public class EhallSchedFragment2 extends Fragment implements AdapterView.OnItemC
 
 
 		try {
-			mCallback = (NavigateToTabFragmentListener) activity;
+			//mCallback = (NavigateToTabFragmentListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement NavigateToListener");
@@ -102,10 +102,10 @@ public class EhallSchedFragment2 extends Fragment implements AdapterView.OnItemC
 		ListView listView = (ListView)v. findViewById(android.R.id.list);
 		// Assign adapter to ListView
 		listView.setAdapter(dataAdapter);
-		listView.setOnItemClickListener(this);
+		//listView.setOnItemClickListener(this);
 
 
-		EditText myFilter = (EditText)v. findViewById(R.id.myFilter);
+		/*EditText myFilter = (EditText)v. findViewById(R.id.myFilter);
 		myFilter.addTextChangedListener(new TextWatcher() {
 
 			public void afterTextChanged(Editable s) {
@@ -125,13 +125,15 @@ public class EhallSchedFragment2 extends Fragment implements AdapterView.OnItemC
 			public Cursor runQuery(CharSequence constraint) {
 				return sqlite_obj.fetchScheduleByDate(constraint.toString());
 			}
-		});
+		});*/
+		
+		sqlite_obj.close();
 
 		return v;
 
 	}
 
-	@Override
+	/*@Override
 	public void onItemClick(AdapterView<?> listView, View view, 
 			int position, long id) {
 		// Get the cursor, positioned to the corresponding row in the result set
@@ -171,15 +173,15 @@ public class EhallSchedFragment2 extends Fragment implements AdapterView.OnItemC
 		mCallback.navigateToTabFragment(myDetailFragment, null); //interface method
 
 		//This interface method is not needed
-		/*try{
+		try{
 		            ((OnSchedItemSelectedListener) getActivity()).onSchedItemPicked(position); 
 		        }catch (ClassCastException cce){
 
-		        }*/
+		        }
 
 		sqlite_obj.close();
 
-	}
+	}*/
 	//This interface is not needed
 	/*public interface OnSchedItemSelectedListener{
 		        public void onSchedItemPicked(int position);

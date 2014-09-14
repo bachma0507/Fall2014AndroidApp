@@ -55,9 +55,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				newFunctioncd = bundle.getString("_id");
 				
-				System.out.println("The value of id is: " + newFunctioncd);
-				
-				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") == true){
+				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") || newFunctioncd.contains("GS_TUES") || newFunctioncd.contains("GS_THURS") == true){
 					speakerslabel.setVisibility(View.VISIBLE);
 				}
 				else{
@@ -87,8 +85,6 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				String t1lname = bundle.getString("trainer1lastname");
 				trainer1lname.setText(t1lname);
-				
-				
 				
 				}
 				

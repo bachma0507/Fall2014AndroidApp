@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10dip"
             android:textStyle="bold"
+            android:textColor="#acacac"
             android:layout_gravity="center"
             android:text="date" />
 

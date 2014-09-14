@@ -180,7 +180,7 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 			}
 		});
 		
-
+		//sqlite_obj.close();
 		return v;
 		
 	}
@@ -188,6 +188,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 	@Override
 	public void onItemClick(AdapterView<?> listView, View view, 
 			int position, long id) {
+		
+		//sqlite_obj.open();
 
 		//Toast.makeText(getActivity(), "Clicked "+ position, Toast.LENGTH_LONG).show();
 		// Get the cursor, positioned to the corresponding row in the result set
