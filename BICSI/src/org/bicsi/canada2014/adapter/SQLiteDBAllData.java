@@ -261,13 +261,12 @@ public class SQLiteDBAllData {
 		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME}, 
 		    		KEY_ID + " LIKE 'COM%' ORDER BY " + KEY_fucntioindate + ", " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null,
 		      null, null, null, null);
-		    		//KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
+		    		
 		   }
 		   else {
 		    mCursor = db.query(true, SQLITE_TABLE, new String[] {
 		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME},
 		    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_ID + " LIKE 'COM%' ORDER BY " + KEY_fucntioindate + ", " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
-		    		//KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
 		   }
 		   if (mCursor != null) {
 		    mCursor.moveToFirst();
