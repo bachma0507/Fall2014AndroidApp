@@ -1,14 +1,18 @@
 package org.bicsi.canada2014.fragment;
 
 import org.bicsi.canada2014.activities.MainActivity;
+import org.bicsi.canada2014.activities.WebViewActivity;
 import org.bicsi.canada2014.adapter.SQLiteDBAllData;
 import org.bicsi.canada2014.common.MizeUtil.NavigateToTabFragmentListener;
 import org.bicsi.fall2014.R;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +24,7 @@ import android.widget.TextView;
 public class ConfSchedSingleFragment extends Fragment  {
 	
 	private NavigateToTabFragmentListener mCallback;
-	private Fragment newFragment = new WebviewFragment();
+	
 	public String newFunctioncd;
 	
 	TextView title;
@@ -121,8 +125,27 @@ public class ConfSchedSingleFragment extends Fragment  {
 				surveybutton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						String urlEndStr = newFunctioncd.replace("'", "");
-						openInternalWebview("https://www.research.net/s/" + urlEndStr);
-						System.out.println("https://www.research.net/s/" + urlEndStr);
+						
+						Intent internetIntent = new Intent(Intent.ACTION_VIEW,
+								Uri.parse("https://www.research.net/s/" + urlEndStr));
+								internetIntent.setComponent(new ComponentName("com.android.browser","com.android.browser.BrowserActivity"));
+								internetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								getActivity().startActivity(internetIntent);
+								//context.startActivity(internetIntent);
+						
+						
+						/*WebViewActivity myWebViewFragment = new WebViewActivity();
+						
+						Bundle bundle = new Bundle();
+						
+						bundle.putString("urlEndStr", urlEndStr);
+						
+						myWebViewFragment.setArguments(bundle);
+
+						mCallback.navigateToTabFragment(myWebViewFragment, null);*/
+						
+						//openInternalWebview("https://www.research.net/s/" + urlEndStr);
+						//System.out.println("https://www.research.net/s/" + urlEndStr);
 					}
 				});
 				
@@ -131,7 +154,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 				return v;
 	}
 	
-	private void openInternalWebview(CharSequence urlToOpen) {
+	/*private void openInternalWebview(CharSequence urlToOpen) {
 		if (urlToOpen == null) {
 			return;
 		}
@@ -144,7 +167,12 @@ public class ConfSchedSingleFragment extends Fragment  {
 	public void onResume() {
 		super.onResume();
 		((MainActivity)getActivity()).updateTracker("Home Tab");
-	}
+	}*/
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		((MainActivity)getActivity()).updateTracker("Home Tab");
+	}
 	
 }
