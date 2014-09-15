@@ -253,21 +253,34 @@ public class SQLiteDBAllData {
 		 
 	 }
 	 
-	 /*public Cursor getAllSChedulesByConfDateNew(String newConfDate){	 
-			Cursor mCursor = db.query(SQLITE_TABLE, new String[] { KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME  }, KEY_fucntioindate + " =?",
-		new String[] {newConfDate}, null, null, null, null);
-		  		 if (mCursor != null) {
-		  			 mCursor.moveToFirst(); 
-		  		 }
-		  		 return mCursor;
-		 
-		}*/
+	 public Cursor fetchCommByName(String inputText) throws SQLException {
+		   Log.w(TAG, inputText);
+		   Cursor mCursor = null;
+		   if (inputText == null  ||  inputText.length () == 0)  {
+		    mCursor = db.query(SQLITE_TABLE, new String[] {
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME}, 
+		    		KEY_ID + " LIKE 'COM%' ORDER BY " + KEY_fucntioindate + ", " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null,
+		      null, null, null, null);
+		    		//KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
+		   }
+		   else {
+		    mCursor = db.query(true, SQLITE_TABLE, new String[] {
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME},
+		    		KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_ID + " LIKE 'COM%' ORDER BY " + KEY_fucntioindate + ", " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null, null, null, null, null);
+		    		//KEY_functiontitle + " like '%" + inputText + "%' AND " + KEY_fucntioindate + " = " + newConfDate + " AND " + KEY_ID + " NOT LIKE 'EXHX%'", null, null, null, null, null);
+		   }
+		   if (mCursor != null) {
+		    mCursor.moveToFirst();
+		   }
+		   return mCursor;
+
+		  }
 	 
-	 public Cursor fetchAllSchedulesByID(String newFunctioncd){
+	 public Cursor fetchAllSchedulesByFuncComm(){
 
 		  Cursor mCursor = db.query(SQLITE_TABLE, new String[] {
-		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionEndTime, KEY_functiondescription, KEY_LOCATIONNAME}, 
-		    		KEY_ID + " = " + newFunctioncd, null,
+		    		KEY_ID, KEY_functiontitle, KEY_fucntioindate, KEY_functionStartTime, KEY_functionStartTimeStr, KEY_functionEndTime, KEY_functionEndTimeStr, KEY_functiondescription, KEY_LOCATIONNAME}, 
+		    		KEY_ID + " LIKE 'COM%' ORDER BY " + KEY_fucntioindate + ", " + KEY_functionStartTime + ", " + KEY_functionEndTime + " ASC", null,
 		      null, null, null, null);
 
 		  if (mCursor != null) {

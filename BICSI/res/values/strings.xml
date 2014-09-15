@@ -75,6 +75,10 @@
  <string name="some_hint_confSched">
   Type here to filter by session name&#8230;
  </string>
+ 
+ <string name="some_hint_comm">
+  Type here to filter by meeting name&#8230;
+ </string>
 	
 	
 </resources>

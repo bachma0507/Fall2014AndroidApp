@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
 	private Fragment newFragment = new WebviewFragment();
 	private Fragment newFragment2 = new EhallSchedFragment2();
 	private Fragment newFragment3 = new ConfSchedFragment();
+	private Fragment newFragment4 = new CommitteeFragment();
 
 	
 	
@@ -136,8 +137,8 @@ public class HomeFragment extends Fragment {
 		});
 		ivCommeet.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
-				openInternalWebview("http://www.bicsi.org/m/content.aspx?id=7003");
+				mCallback.navigateToTabFragment(newFragment4, null);
+				//openInternalWebview("http://www.bicsi.org/m/content.aspx?id=7003");
 			}
 		});
 		ivTrainexam.setOnClickListener(new View.OnClickListener() {
