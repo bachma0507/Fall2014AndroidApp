@@ -90,12 +90,14 @@
             android:text="             "
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <Button
-            android:id="@+id/survey_btn"
-            style="?android:attr/buttonStyleSmall"
+        <TextView
+            android:id="@+id/surveylink"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:text="Take Survey" />
+            android:layout_height="wrap_content"
+            android:text="Take Survey"
+            android:textStyle="bold"
+            android:textColor="#2E2EFE"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 

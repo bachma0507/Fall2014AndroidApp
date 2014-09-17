@@ -38,7 +38,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 	TextView trainer2fname;
 	TextView trainer2lname;
 	TextView speakerslabel;
-	Button surveybutton;
+	TextView surveylink;
 	
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -70,7 +70,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 		trainer2fname = (TextView)v.findViewById(R.id.trainer2fname);
 		trainer2lname = (TextView)v.findViewById(R.id.trainer2lname);
 		speakerslabel = (TextView)v.findViewById(R.id.speakers_label);
-		surveybutton = (Button)v.findViewById(R.id.survey_btn);
+		surveylink = (TextView)v.findViewById(R.id.surveylink);
 		
 		
 		Bundle bundle = getArguments();
@@ -80,11 +80,11 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") || newFunctioncd.contains("GS_TUES") || newFunctioncd.contains("GS_THURS") == true){
 					speakerslabel.setVisibility(View.VISIBLE);
-					surveybutton.setVisibility(View.VISIBLE);
+					surveylink.setVisibility(View.VISIBLE);
 				}
 				else{
 					speakerslabel.setVisibility(View.GONE);
-					surveybutton.setVisibility(View.GONE);
+					surveylink.setVisibility(View.GONE);
 				}
 				
 				String ftitle = bundle.getString("functiontitle");
@@ -122,7 +122,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 				String t2lname = bundle.getString("trainer2lastname");
 				trainer2lname.setText(t2lname);
 				
-				surveybutton.setOnClickListener(new View.OnClickListener() {
+				surveylink.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						String urlEndStr = newFunctioncd.replace("'", "");
 						
