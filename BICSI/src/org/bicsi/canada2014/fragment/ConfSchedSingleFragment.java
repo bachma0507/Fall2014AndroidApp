@@ -1,5 +1,7 @@
 package org.bicsi.canada2014.fragment;
 
+import java.util.List;
+
 import org.bicsi.canada2014.activities.MainActivity;
 import org.bicsi.canada2014.activities.WebViewActivity;
 import org.bicsi.canada2014.adapter.SQLiteDBAllData;
@@ -11,6 +13,8 @@ import android.app.FragmentManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +42,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 	TextView trainer2fname;
 	TextView trainer2lname;
 	TextView speakerslabel;
-	TextView surveylink;
+	Button surveybutton;
 	
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -70,7 +74,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 		trainer2fname = (TextView)v.findViewById(R.id.trainer2fname);
 		trainer2lname = (TextView)v.findViewById(R.id.trainer2lname);
 		speakerslabel = (TextView)v.findViewById(R.id.speakers_label);
-		surveylink = (TextView)v.findViewById(R.id.surveylink);
+		surveybutton = (Button)v.findViewById(R.id.survey_button);
 		
 		
 		Bundle bundle = getArguments();
@@ -80,11 +84,11 @@ public class ConfSchedSingleFragment extends Fragment  {
 				
 				if(newFunctioncd.contains("CONCSES") || newFunctioncd.contains("PRECON") || newFunctioncd.contains("GS_TUES") || newFunctioncd.contains("GS_THURS") == true){
 					speakerslabel.setVisibility(View.VISIBLE);
-					surveylink.setVisibility(View.VISIBLE);
+					surveybutton.setVisibility(View.VISIBLE);
 				}
 				else{
 					speakerslabel.setVisibility(View.GONE);
-					surveylink.setVisibility(View.GONE);
+					surveybutton.setVisibility(View.GONE);
 				}
 				
 				String ftitle = bundle.getString("functiontitle");
@@ -122,7 +126,7 @@ public class ConfSchedSingleFragment extends Fragment  {
 				String t2lname = bundle.getString("trainer2lastname");
 				trainer2lname.setText(t2lname);
 				
-				surveylink.setOnClickListener(new View.OnClickListener() {
+				surveybutton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						String urlEndStr = newFunctioncd.replace("'", "");
 						
@@ -131,8 +135,8 @@ public class ConfSchedSingleFragment extends Fragment  {
 								internetIntent.setComponent(new ComponentName("com.android.browser","com.android.browser.BrowserActivity"));
 								internetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								getActivity().startActivity(internetIntent);
-								//context.startActivity(internetIntent);
-						
+								
+				
 						
 						/*WebViewActivity myWebViewFragment = new WebViewActivity();
 						
