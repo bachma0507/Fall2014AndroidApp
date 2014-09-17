@@ -130,11 +130,17 @@ public class ConfSchedSingleFragment extends Fragment  {
 					public void onClick(View v) {
 						String urlEndStr = newFunctioncd.replace("'", "");
 						
-						Intent internetIntent = new Intent(Intent.ACTION_VIEW,
+						Uri uri = Uri.parse("https://www.research.net/s/" + urlEndStr);
+						Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+						browserIntent.setDataAndType(uri, "text/html");
+						browserIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+						getActivity().startActivity(browserIntent);
+						
+						/*Intent internetIntent = new Intent(Intent.ACTION_VIEW,
 								Uri.parse("https://www.research.net/s/" + urlEndStr));
 								internetIntent.setComponent(new ComponentName("com.android.browser","com.android.browser.BrowserActivity"));
 								internetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-								getActivity().startActivity(internetIntent);
+								getActivity().startActivity(internetIntent);*/
 								
 				
 						
