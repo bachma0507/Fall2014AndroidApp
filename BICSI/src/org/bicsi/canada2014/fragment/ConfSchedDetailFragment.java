@@ -74,7 +74,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				//System.out.println("BUNDLE DATE PASSED IS " + newConfDate);
 
 		sqlite_obj = new SQLiteDBAllData(getActivity());
-
+		
+		try{
 		sqlite_obj.open();
 
 		Cursor cursor = sqlite_obj.getAllSChedulesByConfDateNew(newConfDate);
@@ -107,7 +108,15 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				SQLiteDBAllData.KEY_trainer1firstname,
 				SQLiteDBAllData.KEY_trainer1lastname,
 				SQLiteDBAllData.KEY_trainer2firstname,
-				SQLiteDBAllData.KEY_trainer2lastname
+				SQLiteDBAllData.KEY_trainer2lastname,
+				SQLiteDBAllData.KEY_trainer3firstname,
+				SQLiteDBAllData.KEY_trainer3lastname,
+				SQLiteDBAllData.KEY_trainer4firstname,
+				SQLiteDBAllData.KEY_trainer4lastname,
+				SQLiteDBAllData.KEY_trainer5firstname,
+				SQLiteDBAllData.KEY_trainer5lastname,
+				SQLiteDBAllData.KEY_trainer6firstname,
+				SQLiteDBAllData.KEY_trainer6lastname
 				
 
 		};
@@ -127,7 +136,15 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 				R.id.trainer1fname,
 				R.id.trainer1lname,
 				R.id.trainer2fname,
-				R.id.trainer2lname
+				R.id.trainer2lname,
+				R.id.trainer3fname,
+				R.id.trainer3lname,
+				R.id.trainer4fname,
+				R.id.trainer4lname,
+				R.id.trainer5fname,
+				R.id.trainer5lname,
+				R.id.trainer6fname,
+				R.id.trainer6lname
 
 		};
 
@@ -184,8 +201,12 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 			}
 		});
 		
-		//sqlite_obj.close();
+		
 		return v;
+		
+		} finally {
+			sqlite_obj.close();
+		}
 		
 	}
 
@@ -193,7 +214,8 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 	public void onItemClick(AdapterView<?> listView, View view, 
 			int position, long id) {
 		
-		//sqlite_obj.open();
+		try{
+		sqlite_obj.open();
 
 		//Toast.makeText(getActivity(), "Clicked "+ position, Toast.LENGTH_LONG).show();
 		// Get the cursor, positioned to the corresponding row in the result set
@@ -248,6 +270,30 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		String trainer2lastname = 
 				cursor.getString(cursor.getColumnIndexOrThrow("trainer2lastname"));
 		
+		String trainer3firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer3firstname"));
+		
+		String trainer3lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer3lastname"));
+		
+		String trainer4firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer4firstname"));
+		
+		String trainer4lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer4lastname"));
+		
+		String trainer5firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer5firstname"));
+		
+		String trainer5lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer5lastname"));
+		
+		String trainer6firstname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer6firstname"));
+		
+		String trainer6lastname = 
+				cursor.getString(cursor.getColumnIndexOrThrow("trainer6lastname"));
+		
 
 
 		ConfSchedSingleFragment mySingleFragment = new ConfSchedSingleFragment();
@@ -267,6 +313,14 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		bundle.putString("trainer1lastname", trainer1lastname);
 		bundle.putString("trainer2firstname", trainer2firstname);
 		bundle.putString("trainer2lastname", trainer2lastname);
+		bundle.putString("trainer3firstname", trainer3firstname);
+		bundle.putString("trainer3lastname", trainer3lastname);
+		bundle.putString("trainer4firstname", trainer4firstname);
+		bundle.putString("trainer4lastname", trainer4lastname);
+		bundle.putString("trainer5firstname", trainer5firstname);
+		bundle.putString("trainer5lastname", trainer5lastname);
+		bundle.putString("trainer6firstname", trainer6firstname);
+		bundle.putString("trainer6lastname", trainer6lastname);
 		
 		
 
@@ -276,9 +330,10 @@ public class ConfSchedDetailFragment extends Fragment implements AdapterView.OnI
 		
 		
 		
+		} finally{
 		
-
 		sqlite_obj.close();
+		}
 
 	}
 

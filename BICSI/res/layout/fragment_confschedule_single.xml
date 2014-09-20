@@ -195,5 +195,113 @@
         
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/trainer3fname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fname3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/space3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/trainer3lname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lname3"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/trainer4fname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fname4"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/space4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/trainer4lname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lname4"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/trainer5fname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fname5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/space5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/trainer5lname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lname5"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/trainer6fname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fname6"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/space6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/trainer6lname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lname6"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 </LinearLayout>
 </ScrollView>

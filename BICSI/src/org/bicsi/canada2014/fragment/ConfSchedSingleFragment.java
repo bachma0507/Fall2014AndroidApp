@@ -41,6 +41,14 @@ public class ConfSchedSingleFragment extends Fragment  {
 	TextView trainer1lname;
 	TextView trainer2fname;
 	TextView trainer2lname;
+	TextView trainer3fname;
+	TextView trainer3lname;
+	TextView trainer4fname;
+	TextView trainer4lname;
+	TextView trainer5fname;
+	TextView trainer5lname;
+	TextView trainer6fname;
+	TextView trainer6lname;
 	TextView speakerslabel;
 	Button surveybutton;
 	
@@ -73,6 +81,14 @@ public class ConfSchedSingleFragment extends Fragment  {
 		trainer1lname = (TextView)v.findViewById(R.id.trainer1lname);
 		trainer2fname = (TextView)v.findViewById(R.id.trainer2fname);
 		trainer2lname = (TextView)v.findViewById(R.id.trainer2lname);
+		trainer3fname = (TextView)v.findViewById(R.id.trainer3fname);
+		trainer3lname = (TextView)v.findViewById(R.id.trainer3lname);
+		trainer4fname = (TextView)v.findViewById(R.id.trainer4fname);
+		trainer4lname = (TextView)v.findViewById(R.id.trainer4lname);
+		trainer5fname = (TextView)v.findViewById(R.id.trainer5fname);
+		trainer5lname = (TextView)v.findViewById(R.id.trainer5lname);
+		trainer6fname = (TextView)v.findViewById(R.id.trainer6fname);
+		trainer6lname = (TextView)v.findViewById(R.id.trainer6lname);
 		speakerslabel = (TextView)v.findViewById(R.id.speakers_label);
 		surveybutton = (Button)v.findViewById(R.id.survey_button);
 		
@@ -118,13 +134,59 @@ public class ConfSchedSingleFragment extends Fragment  {
 				String t2fname = bundle.getString("trainer2firstname");
 				trainer2fname.setText(t2fname);
 				
+				String t2lname = bundle.getString("trainer2lastname");
+				trainer2lname.setText(t2lname);
+				
 				if(t2fname.isEmpty() == true){
 					trainer2fname.setVisibility(View.GONE);
 					trainer2lname.setVisibility(View.GONE);
 				}
 				
-				String t2lname = bundle.getString("trainer2lastname");
-				trainer2lname.setText(t2lname);
+				String t3lname = bundle.getString("trainer3lastname");
+				trainer3lname.setText(t3lname);
+				
+				String t3fname = bundle.getString("trainer3firstname");
+				trainer3fname.setText(t3fname);
+				
+				if(t3fname.isEmpty() == true){
+					trainer3fname.setVisibility(View.GONE);
+					trainer3lname.setVisibility(View.GONE);
+				}
+				
+				String t4lname = bundle.getString("trainer4lastname");
+				trainer4lname.setText(t4lname);
+				
+				String t4fname = bundle.getString("trainer4firstname");
+				trainer4fname.setText(t4fname);
+				
+				if(t4fname.isEmpty() == true){
+					trainer4fname.setVisibility(View.GONE);
+					trainer4lname.setVisibility(View.GONE);
+				}
+				
+				String t5lname = bundle.getString("trainer5lastname");
+				trainer5lname.setText(t5lname);
+				
+				String t5fname = bundle.getString("trainer5firstname");
+				trainer5fname.setText(t5fname);
+				
+				if(t5fname.isEmpty() == true){
+					trainer5fname.setVisibility(View.GONE);
+					trainer5lname.setVisibility(View.GONE);
+				}
+				
+				String t6lname = bundle.getString("trainer6lastname");
+				trainer6lname.setText(t6lname);
+				
+				String t6fname = bundle.getString("trainer6firstname");
+				trainer6fname.setText(t6fname);
+				
+				if(t6fname.isEmpty() == true){
+					trainer6fname.setVisibility(View.GONE);
+					trainer6lname.setVisibility(View.GONE);
+				}
+				
+				
 				
 				surveybutton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
